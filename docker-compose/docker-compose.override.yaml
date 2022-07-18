@@ -7,6 +7,9 @@ services:
       - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
       # - 'SRC_SITE_ADDRESS=ec2-54-188-111-47.us-west-2.compute.amazonaws.com'
       # - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
+    volumes:
+      - 'caddy:/caddy-storage'
+      - '../caddy/builtins/https.lets-encrypt-staging.Caddyfile:/etc/caddy/Caddyfile'
   redis-cache:
     cpus: 1
     mem_limit: '1g'
