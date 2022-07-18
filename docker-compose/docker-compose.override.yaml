@@ -1,5 +1,12 @@
 version: '2.4'
 services:
+  caddy:
+    environment:
+      - 'XDG_DATA_HOME=/caddy-storage/data'
+      - 'XDG_CONFIG_HOME=/caddy-storage/config'
+      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
+      # - 'SRC_SITE_ADDRESS=ec2-54-188-111-47.us-west-2.compute.amazonaws.com'
+      # - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
   redis-cache:
     cpus: 1
     mem_limit: '1g'
