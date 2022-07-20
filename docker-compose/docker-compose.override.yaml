@@ -12,3 +12,30 @@ services:
   zoekt-webserver-0:
     cpus: 8
     mem_limit: '130g'
+  gitserver-0:
+    cpus: 8
+    mem_limit: '16g'
+  searcher-0:
+    cpus: 4
+    mem_limit: '4g'
+  symbols-0:
+    cpus: 4
+    mem_limit: '4g'
+    environment:
+      - USE_ROCKSKIP=true
+      - ROCKSKIP_MIN_REPO_SIZE_MB=1000
+
+# version: '2.4'
+# services:
+#   redis-cache:
+#     cpus: 1
+#     mem_limit: '1g'
+#   redis-store:
+#     cpus: 1
+#     mem_limit: '1g'
+#   zoekt-indexserver-0:
+#     cpus: 8
+#     mem_limit: '20g'
+#   zoekt-webserver-0:
+#     cpus: 8
+#     mem_limit: '130g'
