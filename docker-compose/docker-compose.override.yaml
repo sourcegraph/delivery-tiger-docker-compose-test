@@ -30,9 +30,7 @@ services:
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
       - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
-      - 'SRC_SITE_ADDRESS=ec2-52-11-101-134.us-west-2.compute.amazonaws.com/'
-      #
-      # Uncomment & update the following line when using HTTPS with Let's Encrypt
+      - 'SRC_SITE_ADDRESS=ec2-52-11-101-134.us-west-2.compute.amazonaws.com'
       - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
     volumes:
       - 'caddy:/caddy-storage'
