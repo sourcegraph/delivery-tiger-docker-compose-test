@@ -10,7 +10,7 @@ DEPLOY_SOURCEGRAPH_DOCKER_CHECKOUT='/home/ec2-user/deploy-sourcegraph-docker'
 
 # 🚨 Update these variables with the correct values from your fork!
 DEPLOY_SOURCEGRAPH_DOCKER_FORK_CLONE_URL='https://github.com/sourcegraph/delivery-tiger-docker-compose-test.git'
-DEPLOY_SOURCEGRAPH_DOCKER_FORK_REVISION='tier2-aws'
+DEPLOY_SOURCEGRAPH_DOCKER_FORK_REVISION='tier4-aws'
 
 # Install git
 yum update -y
