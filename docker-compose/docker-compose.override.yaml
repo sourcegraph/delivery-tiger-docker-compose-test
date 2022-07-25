@@ -7,19 +7,19 @@ services:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 32
+    cpus: 64
     mem_limit: '40g'
   zoekt-webserver-0:
     cpus: 8
     mem_limit: '60g'
   gitserver-0:
-    cpus: 32
-    mem_limit: '64g'
+    cpus: 56
+    mem_limit: '120g'
   searcher-0:
     cpus: 8
     mem_limit: '8g'
   symbols-0:
-    cpus: 6
+    cpus: 12
     mem_limit: '8g'
     environment:
       - USE_ROCKSKIP=true
