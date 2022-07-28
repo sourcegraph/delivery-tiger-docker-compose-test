@@ -13,7 +13,7 @@ services:
     cpus: 24
     mem_limit: '100g'
   gitserver-0:
-    cpus: 15
+    cpus: 16
     mem_limit: '65g'
   searcher-0:
     cpus: 4
@@ -36,7 +36,8 @@ services:
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
       - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
-      - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
+      # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
+      - 'SRC_SITE_ADDRESS=ec2-18-236-77-245.us-west-2.compute.amazonaws.com'
       #
       # Uncomment & update the following line when using HTTPS with Let's Encrypt
       - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
