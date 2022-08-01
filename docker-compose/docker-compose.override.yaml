@@ -2,57 +2,15 @@ version: '2.4'
 services:
   redis-cache:
     cpus: 1
-    mem_limit: '2g'
+    mem_limit: '1g'
   redis-store:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
     cpus: 8
-    mem_limit: '65g'
-  zoekt-webserver-0:
-    cpus: 24
-    mem_limit: '100g'
-  gitserver-0:
-    cpus: 16
-    mem_limit: '65g'
-  searcher-0:
-    cpus: 4
-    mem_limit: '24g'
-  symbols-0:
-    cpus: 8
     mem_limit: '16g'
-    environment:
-      - USE_ROCKSKIP=true
-      - ROCKSKIP_MIN_REPO_SIZE_MB=1000
-  pgsql:
+  zoekt-webserver-0:
     cpus: 8
-    mem_limit: '32g'
-  minio:
-    cpus: 0.5
-    mem_limit: '4g'
-  caddy:
-    environment:
-      - 'XDG_DATA_HOME=/caddy-storage/data'
-      - 'XDG_CONFIG_HOME=/caddy-storage/config'
-      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
-      # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
-      # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
-      - 'SRC_SITE_ADDRESS=ec2-54-187-70-213.us-west-2.compute.amazonaws.com'
-      #
-      # Uncomment & update the following line when using HTTPS with Let's Encrypt
-      - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
-    volumes:
-      - 'caddy:/caddy-storage'
-      #
-      # IMPORTANT: if a customer uses a reverse proxy in front of Caddy
-      # the configuration files below must be updated to include trusted_proxies
-      # 
-      # Comment out the following line when using HTTPS with either Let's Encrypt or custom certificates
-      # - '../caddy/builtins/http.Caddyfile:/etc/caddy/Caddyfile'
-      #
-      # Uncomment the following line when using HTTPS with Let's Encrypt's staging environment
-      # - '../caddy/builtins/https.lets-encrypt-staging.Caddyfile:/etc/caddy/Caddyfile'
-      #
-      # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
-      # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
-      - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
+    mem_limit: '50g'
+  gitserver-0:
+    cpus: 8
