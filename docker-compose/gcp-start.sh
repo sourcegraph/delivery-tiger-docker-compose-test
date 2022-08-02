@@ -10,7 +10,7 @@ DEPLOY_SOURCEGRAPH_DOCKER_CHECKOUT='/root/deploy-sourcegraph-docker'
 
 # 🚨 Update these variables with the correct values from your fork!
 DEPLOY_SOURCEGRAPH_DOCKER_FORK_CLONE_URL='https://github.com/sourcegraph/delivery-tiger-docker-compose-test.git'
-DEPLOY_SOURCEGRAPH_DOCKER_FORK_REVISION='tier1-gcp'
+DEPLOY_SOURCEGRAPH_DOCKER_FORK_REVISION='tier0-gcp'
 
 # Install git
 sudo apt-get update -y
