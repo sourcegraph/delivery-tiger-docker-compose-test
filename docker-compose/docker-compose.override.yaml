@@ -13,11 +13,11 @@ services:
     cpus: 24
     mem_limit: '100g'
   gitserver-0:
-    cpus: 24
+    cpus: 8
     mem_limit: '65g'
   searcher-0:
-    cpus: 4
-    mem_limit: '24g'
+    cpus: 16
+    mem_limit: '65g'
   symbols-0:
     cpus: 8
     mem_limit: '16g'
