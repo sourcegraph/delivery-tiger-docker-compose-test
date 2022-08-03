@@ -16,7 +16,7 @@ services:
     cpus: 8
     mem_limit: '65g'
   searcher-0:
-    cpus: 8
+    cpus: 16
     mem_limit: '60g'
   symbols-0:
     cpus: 8
@@ -28,7 +28,7 @@ services:
     cpus: 8
     mem_limit: '32g'
   minio:
-    cpus: 0.5
+    cpus: '500m'
     mem_limit: '4g'
   caddy:
     environment:
