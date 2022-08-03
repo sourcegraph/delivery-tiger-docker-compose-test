@@ -28,7 +28,7 @@ services:
     cpus: 8
     mem_limit: '32g'
   minio:
-    cpus: '500m'
+    cpus: 500m
     mem_limit: '4g'
   caddy:
     environment:
