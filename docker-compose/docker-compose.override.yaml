@@ -20,7 +20,7 @@ services:
     mem_limit: '32g'
   symbols-0:
     cpus: 8
-    mem_limit: '16'
+    mem_limit: '16g'
     environment:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
