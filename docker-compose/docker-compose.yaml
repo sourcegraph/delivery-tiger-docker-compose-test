@@ -159,7 +159,42 @@ services:
     depends_on:
       sourcegraph-frontend-internal:
         condition: service_healthy
-
+  sourcegraph-frontend-1:
+    container_name: sourcegraph-frontend-1
+    image: 'index.docker.io/sourcegraph/frontend:3.40.2@sha256:11d274d736c471fd9fb0bce7129cdc8b84e769efdd2e2c418009988c8eb67fdf'
+    cpus: 4
+    mem_limit: '8g'
+    environment:
+      - DEPLOY_TYPE=docker-compose
+      - JAEGER_AGENT_HOST=jaeger
+      - PGHOST=pgsql
+      - CODEINTEL_PGHOST=codeintel-db
+      - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
+      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178'
+      - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181'
+      - 'SYMBOLS_URL=http://symbols-0:3184'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070'
+      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
+      - 'REPO_UPDATER_URL=http://repo-updater:3182'
+      - 'GRAFANA_SERVER_URL=http://grafana:3370'
+      - 'JAEGER_SERVER_URL=http://jaeger:16686'
+      - 'GITHUB_BASE_URL=http://github-proxy:3180'
+      - 'PROMETHEUS_URL=http://prometheus:9090'
+    healthcheck:
+      test: "wget -q 'http://127.0.0.1:3080/healthz' -O /dev/null || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+    volumes:
+      - 'sourcegraph-frontend-1:/mnt/cache'
+    networks:
+      - sourcegraph
+    restart: always
+    depends_on:
+      sourcegraph-frontend-internal:
+        condition: service_healthy
   # Description: Serves the internal Sourcegraph frontend API.
   #
   # Disk: 128GB / non-persistent SSD
@@ -310,6 +345,24 @@ services:
       retries: 3
     volumes:
       - 'searcher-0:/mnt/cache'
+    networks:
+      - sourcegraph
+    restart: always
+  searcher-1:
+    container_name: searcher-1
+    image: 'index.docker.io/sourcegraph/searcher:3.40.2@sha256:aa7b277ec4aa867764880ba594dab12c452071b28a58d7db5c4e09994d82d7e1'
+    cpus: 2
+    mem_limit: '2g'
+    environment:
+      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
+      - JAEGER_AGENT_HOST=jaeger
+    healthcheck:
+      test: "wget -q 'http://127.0.0.1:3181/healthz' -O /dev/null || exit 1"
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - 'searcher-1:/mnt/cache'
     networks:
       - sourcegraph
     restart: always
@@ -782,6 +835,7 @@ volumes:
   searcher-0:
   searcher-1:
   sourcegraph-frontend-0:
+  sourcegraph-frontend-1:
   sourcegraph-frontend-internal-0:
   symbols-0:
   zoekt-0-shared:
