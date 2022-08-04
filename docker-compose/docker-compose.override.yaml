@@ -13,8 +13,8 @@ services:
     cpus: 24
     mem_limit: '65g'
   gitserver-0:
-    cpus: 15
-    mem_limit: '65g'
+    cpus: 6
+    mem_limit: '32g'
   searcher-0:
     cpus: 4
     mem_limit: '12g'
@@ -47,6 +47,15 @@ services:
     networks:
       - sourcegraph
     restart: always
+  worker:
+    environment:
+      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
+      - JAEGER_AGENT_HOST=jaeger
+      - 'SRC_GIT_SERVERS=gitserver-0:3178'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181'
+      - 'SYMBOLS_URL=http://symbols-0:3184'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070'
+      - 'GITHUB_BASE_URL=http://github-proxy:3180'
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
