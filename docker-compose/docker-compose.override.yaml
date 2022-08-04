@@ -8,13 +8,16 @@ services:
     mem_limit: '1g'
   zoekt-indexserver-0:
     cpus: 8
-    mem_limit: '64g'
+    mem_limit: '65g'
   zoekt-webserver-0:
     cpus: 24
-    mem_limit: '120g'
+    mem_limit: '100g'
   gitserver-0:
-    cpus: 8
-    mem_limit: '64g'
+    cpus: 15
+    mem_limit: '65g'
+  searcher-0:
+    cpus: 4
+    mem_limit: '24g'
   symbols-0:
     cpus: 8
     mem_limit: '16g'
@@ -23,10 +26,27 @@ services:
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
   pgsql:
     cpus: 8
-    mem_limit: '16g'
+    mem_limit: '32g'
   minio:
     cpus: 0.5
-    mem_limit: '4g'
+  searcher-1:
+    container_name: searcher-1
+    image: 'index.docker.io/sourcegraph/searcher:3.40.2@sha256:aa7b277ec4aa867764880ba594dab12c452071b28a58d7db5c4e09994d82d7e1'
+    cpus: 4
+    mem_limit: '24g'
+    environment:
+      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
+      - JAEGER_AGENT_HOST=jaeger
+    healthcheck:
+      test: "wget -q 'http://127.0.0.1:3181/healthz' -O /dev/null || exit 1"
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - 'searcher-1:/mnt/cache'
+    networks:
+      - sourcegraph
+    restart: always
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
@@ -53,30 +73,3 @@ services:
       # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
       # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
       - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
-  sourcegraph-frontend-0:
-    cpus: 4
-    mem_limit: '16g'
-  sourcegraph-frontend-internal:
-    cpus: 4
-    mem_limit: '16g'
-  searcher-0:
-    cpus: 8
-    mem_limit: '24g'
-  searcher-1:
-    container_name: searcher-1
-    image: 'index.docker.io/sourcegraph/searcher:3.40.2@sha256:aa7b277ec4aa867764880ba594dab12c452071b28a58d7db5c4e09994d82d7e1'
-    cpus: 8
-    mem_limit: '24g'
-    environment:
-      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
-    healthcheck:
-      test: "wget -q 'http://127.0.0.1:3181/healthz' -O /dev/null || exit 1"
-      interval: 5s
-      timeout: 10s
-      retries: 3
-    volumes:
-      - 'searcher-1:/mnt/cache'
-    networks:
-      - sourcegraph
-    restart: always
