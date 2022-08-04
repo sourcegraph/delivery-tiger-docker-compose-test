@@ -136,7 +136,7 @@ services:
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
       - 'SRC_GIT_SERVERS=gitserver-0:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
-      - 'SEARCHER_URL=http://searcher-0:3181'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -178,7 +178,7 @@ services:
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
       - 'SRC_GIT_SERVERS=gitserver-0:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
-      - 'SEARCHER_URL=http://searcher-0:3181'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -300,7 +300,24 @@ services:
     networks:
       - sourcegraph
     restart: always
-
+  searcher-1:
+    container_name: searcher-1
+    image: 'index.docker.io/sourcegraph/searcher:3.42.0@sha256:7354d4b6031e999d02d7b9a5d47ca5351dece76b318a298bd19bc9e0b207d315'
+    cpus: 2
+    mem_limit: '2g'
+    environment:
+      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
+      - JAEGER_AGENT_HOST=jaeger
+    healthcheck:
+      test: "wget -q 'http://127.0.0.1:3181/healthz' -O /dev/null || exit 1"
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - 'searcher-1:/mnt/cache'
+    networks:
+      - sourcegraph
+    restart: always
   # Description: Rate-limiting proxy for the GitHub API.
   #
   # CPU: 1
@@ -380,7 +397,7 @@ services:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - JAEGER_AGENT_HOST=jaeger
       - 'SRC_GIT_SERVERS=gitserver-0:3178'
-      - 'SEARCHER_URL=http://searcher-0:3181'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
@@ -767,6 +784,7 @@ volumes:
   repo-updater:
   worker:
   searcher-0:
+  searcher-1:
   sourcegraph-frontend-0:
   sourcegraph-frontend-internal-0:
   symbols-0:
