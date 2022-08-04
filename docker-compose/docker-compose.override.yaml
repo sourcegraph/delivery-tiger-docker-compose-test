@@ -53,29 +53,29 @@ services:
   sourcegraph-frontend-internal:
     cpus: 4
     mem_limit: '12g'
-  caddy:
-    environment:
-      - 'XDG_DATA_HOME=/caddy-storage/data'
-      - 'XDG_CONFIG_HOME=/caddy-storage/config'
-      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
-      # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
-      # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
-      - 'SRC_SITE_ADDRESS=ec2-35-85-46-193.us-west-2.compute.amazonaws.com'
-      #
-      # Uncomment & update the following line when using HTTPS with Let's Encrypt
-      - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
-    volumes:
-      - 'caddy:/caddy-storage'
-      #
-      # IMPORTANT: if a customer uses a reverse proxy in front of Caddy
-      # the configuration files below must be updated to include trusted_proxies
-      #
-      # Comment out the following line when using HTTPS with either Let's Encrypt or custom certificates
-      # - '../caddy/builtins/http.Caddyfile:/etc/caddy/Caddyfile'
-      #
-      # Uncomment the following line when using HTTPS with Let's Encrypt's staging environment
-      # - '../caddy/builtins/https.lets-encrypt-staging.Caddyfile:/etc/caddy/Caddyfile'
-      #
-      # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
-      # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
-      - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
+  # caddy:
+  #   environment:
+  #     - 'XDG_DATA_HOME=/caddy-storage/data'
+  #     - 'XDG_CONFIG_HOME=/caddy-storage/config'
+  #     - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
+  #     # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
+  #     # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
+  #     - 'SRC_SITE_ADDRESS=ec2-54-187-70-213.us-west-2.compute.amazonaws.com'
+  #     #
+  #     # Uncomment & update the following line when using HTTPS with Let's Encrypt
+  #     - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
+  #   volumes:
+  #     - 'caddy:/caddy-storage'
+  #     #
+  #     # IMPORTANT: if a customer uses a reverse proxy in front of Caddy
+  #     # the configuration files below must be updated to include trusted_proxies
+  #     #
+  #     # Comment out the following line when using HTTPS with either Let's Encrypt or custom certificates
+  #     # - '../caddy/builtins/http.Caddyfile:/etc/caddy/Caddyfile'
+  #     #
+  #     # Uncomment the following line when using HTTPS with Let's Encrypt's staging environment
+  #     # - '../caddy/builtins/https.lets-encrypt-staging.Caddyfile:/etc/caddy/Caddyfile'
+  #     #
+  #     # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
+  #     # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
+  #     - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
