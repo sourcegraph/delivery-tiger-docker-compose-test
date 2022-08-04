@@ -16,7 +16,7 @@ services:
     cpus: 8
     mem_limit: '65g'
   searcher-0:
-    cpus: 24
+    cpus: 12
     mem_limit: '32g'
   symbols-0:
     cpus: 16
@@ -62,3 +62,21 @@ services:
   sourcegraph-frontend-internal:
     cpus: 12
     mem_limit: '16g'
+  searcher-1:
+    container_name: searcher-1
+    image: 'index.docker.io/sourcegraph/searcher:3.40.2@sha256:aa7b277ec4aa867764880ba594dab12c452071b28a58d7db5c4e09994d82d7e1'
+    cpus: 12
+    mem_limit: '32g'
+    environment:
+      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
+      - JAEGER_AGENT_HOST=jaeger
+    healthcheck:
+      test: "wget -q 'http://127.0.0.1:3181/healthz' -O /dev/null || exit 1"
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - 'searcher-1:/mnt/cache'
+    networks:
+      - sourcegraph
+    restart: always

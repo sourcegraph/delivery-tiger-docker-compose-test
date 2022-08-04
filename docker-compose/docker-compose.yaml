@@ -300,7 +300,6 @@ services:
     networks:
       - sourcegraph
     restart: always
-
   # Description: Rate-limiting proxy for the GitHub API.
   #
   # CPU: 1
@@ -767,6 +766,7 @@ volumes:
   repo-updater:
   worker:
   searcher-0:
+  searcher-1:
   sourcegraph-frontend-0:
   sourcegraph-frontend-internal-0:
   symbols-0:
