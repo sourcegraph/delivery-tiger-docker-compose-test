@@ -13,11 +13,11 @@ services:
     cpus: 8
     mem_limit: '60g'
   zoekt-webserver-0:
-    cpus: 16
-    mem_limit: '120g'
+    cpus: 12
+    mem_limit: '200g'
   zoekt-webserver-1:
-    cpus: 16
-    mem_limit: '120g'
+    cpus: 12
+    mem_limit: '200g'
   gitserver-0:
     cpus: 6
     mem_limit: '32g'
@@ -52,10 +52,10 @@ services:
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
   sourcegraph-frontend-0:
     cpus: 4
-    mem_limit: '12g'
+    mem_limit: '6g'
   sourcegraph-frontend-1:
     cpus: 4
-    mem_limit: '12g'
+    mem_limit: '6g'
   sourcegraph-frontend-internal:
     cpus: 4
     mem_limit: '12g'
