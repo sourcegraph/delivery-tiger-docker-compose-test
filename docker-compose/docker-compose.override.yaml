@@ -1,0 +1,52 @@
+version: '2.4'
+services:
+  redis-cache:
+    cpus: 1
+    mem_limit: '2g'
+  redis-store:
+    cpus: 1
+    mem_limit: '1g'
+  zoekt-indexserver-0:
+    cpus: 8
+    mem_limit: '40g'
+  zoekt-webserver-0:
+    cpus: 12
+    mem_limit: '100g'
+  zoekt-indexserver-1:
+    cpus: 8
+    mem_limit: '40g'
+  zoekt-webserver-1:
+    cpus: 12
+    mem_limit: '100g'
+  gitserver-0:
+    cpus: 4
+    mem_limit: '40g'
+  gitserver-1:
+    cpus: 4
+    mem_limit: '40g'
+  searcher-0:
+    cpus: 4
+    mem_limit: '12g'
+  searcher-1:
+    cpus: 4
+    mem_limit: '12g'
+  symbols-0:
+    cpus: 4
+    mem_limit: '12g'
+    environment:
+      - USE_ROCKSKIP=true
+      - ROCKSKIP_MIN_REPO_SIZE_MB=1000
+  pgsql:
+    cpus: 4
+    mem_limit: '8g'
+  minio:
+    cpus: 0.5
+  sourcegraph-frontend-0:
+    cpus: 4
+    mem_limit: '8g'
+  sourcegraph-frontend-1:
+    cpus: 4
+    mem_limit: '8g'
+  sourcegraph-frontend-internal:
+    cpus: 4
+    mem_limit: '8g'
