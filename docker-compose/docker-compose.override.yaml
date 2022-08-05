@@ -7,10 +7,16 @@ services:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 8
-    mem_limit: '30g'
+    cpus: 4
+    mem_limit: '40g'
+  zoekt-indexserver-1:
+    cpus: 4
+    mem_limit: '40g'
   zoekt-webserver-0:
-    cpus: 24
+    cpus: 12
+    mem_limit: '65g'
+  zoekt-webserver-1:
+    cpus: 12
     mem_limit: '65g'
   gitserver-0:
     cpus: 6
@@ -19,11 +25,11 @@ services:
     cpus: 6
     mem_limit: '32g'
   searcher-0:
-    cpus: 4
-    mem_limit: '12g'
+    cpus: 8
+    mem_limit: '24g'
   searcher-1:
-    cpus: 4
-    mem_limit: '12g'
+    cpus: 8
+    mem_limit: '24g'
   symbols-0:
     cpus: 8
     mem_limit: '16g'
