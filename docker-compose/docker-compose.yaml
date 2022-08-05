@@ -870,5 +870,6 @@ volumes:
   sourcegraph-frontend-internal-0:
   symbols-0:
   zoekt-0-shared:
+  zoekt-1-shared:
 networks:
   sourcegraph:
