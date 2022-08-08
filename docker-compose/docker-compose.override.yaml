@@ -8,29 +8,28 @@ services:
     mem_limit: '1g'
   zoekt-indexserver-0:
     cpus: 6
-    mem_limit: '40g'
+    mem_limit: '37g'
   zoekt-indexserver-1:
     cpus: 6
-    mem_limit: '40g'
+    mem_limit: '37g'
   zoekt-indexserver-2:
     cpus: 6
-    mem_limit: '40g'
+    mem_limit: '37g'
   zoekt-webserver-0:
     cpus: 12
-
-    mem_limit: '120g'
+    mem_limit: '150g'
   zoekt-webserver-1:
     cpus: 12
-    mem_limit: '120g'
+    mem_limit: '150g'
   zoekt-webserver-2:
     cpus: 12
-    mem_limit: '120g'
+    mem_limit: '150g'
   gitserver-0:
     cpus: 8
-    mem_limit: '32g'
+    mem_limit: '28g'
   gitserver-1:
     cpus: 8
-    mem_limit: '32g'
+    mem_limit: '28g'
   searcher-0:
     cpus: 8
     mem_limit: '16g'
