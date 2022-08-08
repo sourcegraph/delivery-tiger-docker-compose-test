@@ -2,37 +2,47 @@ version: '2.4'
 services:
   redis-cache:
     cpus: 1
-    mem_limit: '2g'
+    mem_limit: '3g'
   redis-store:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 8
-    mem_limit: '60g'
+    cpus: 4
+    mem_limit: '40g'
   zoekt-indexserver-1:
-    cpus: 8
-    mem_limit: '60g'
+    cpus: 4
+    mem_limit: '40g'
+  zoekt-indexserver-2:
+    cpus: 4
+    mem_limit: '40g'
   zoekt-webserver-0:
-    cpus: 12
-    mem_limit: '200g'
+    cpus: 8
+
+    mem_limit: '120g'
   zoekt-webserver-1:
-    cpus: 12
-    mem_limit: '200g'
+    cpus: 8
+    mem_limit: '120g'
+  zoekt-webserver-2:
+    cpus: 8
+    mem_limit: '120g'
   gitserver-0:
-    cpus: 6
+    cpus: 8
     mem_limit: '32g'
   gitserver-1:
-    cpus: 6
+    cpus: 8
     mem_limit: '32g'
   searcher-0:
-    cpus: 8
-    mem_limit: '24g'
+    cpus: 6
+    mem_limit: '12g'
   searcher-1:
-    cpus: 8
-    mem_limit: '24g'
+    cpus: 6
+    mem_limit: '12g'
+  searcher-2:
+    cpus: 6
+    mem_limit: '12g'
   symbols-0:
-    cpus: 8
-    mem_limit: '16g'
+    cpus: 6
+    mem_limit: '12g'
     environment:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
@@ -41,15 +51,6 @@ services:
     mem_limit: '16g'
   minio:
     cpus: 0.5
-  worker:
-    environment:
-      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
-      - 'SRC_GIT_SERVERS=gitserver-0:3178'
-      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181'
-      - 'SYMBOLS_URL=http://symbols-0:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070'
-      - 'GITHUB_BASE_URL=http://github-proxy:3180'
   sourcegraph-frontend-0:
     cpus: 4
     mem_limit: '6g'
@@ -58,7 +59,7 @@ services:
     mem_limit: '6g'
   sourcegraph-frontend-internal:
     cpus: 4
-    mem_limit: '12g'
+    mem_limit: '6g'
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
