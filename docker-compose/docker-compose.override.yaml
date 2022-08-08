@@ -7,37 +7,37 @@ services:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 6
+    cpus: 8
     mem_limit: '37g'
   zoekt-indexserver-1:
-    cpus: 6
+    cpus: 8
     mem_limit: '37g'
   zoekt-indexserver-2:
-    cpus: 6
+    cpus: 8
     mem_limit: '37g'
   zoekt-webserver-0:
-    cpus: 12
-    mem_limit: '150g'
+    cpus: 18
+    mem_limit: '70g'
   zoekt-webserver-1:
-    cpus: 12
-    mem_limit: '150g'
+    cpus: 18
+    mem_limit: '70g'
   zoekt-webserver-2:
-    cpus: 12
-    mem_limit: '150g'
+    cpus: 18
+    mem_limit: '70g'
   gitserver-0:
     cpus: 8
-    mem_limit: '28g'
+    mem_limit: '16g'
   gitserver-1:
     cpus: 8
-    mem_limit: '28g'
+    mem_limit: '16g'
   searcher-0:
-    cpus: 8
+    cpus: 12
     mem_limit: '16g'
   searcher-1:
-    cpus: 8
+    cpus: 12
     mem_limit: '16g'
   searcher-2:
-    cpus: 8
+    cpus: 12
     mem_limit: '16g'
   symbols-0:
     cpus: 6
@@ -47,7 +47,7 @@ services:
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
   pgsql:
     cpus: 4
-    mem_limit: '16g'
+    mem_limit: '12g'
   minio:
     cpus: 0.5
   sourcegraph-frontend-0:
