@@ -25,10 +25,10 @@ services:
     cpus: 18
     mem_limit: '50g'
   gitserver-0:
-    cpus: 8
+    cpus: 6
     mem_limit: '16g'
   gitserver-1:
-    cpus: 8
+    cpus: 6
     mem_limit: '16g'
   searcher-0:
     cpus: 12
@@ -56,6 +56,9 @@ services:
   sourcegraph-frontend-1:
     cpus: 4
     mem_limit: '8g'
+  sourcegraph-frontend-2:
+    cpus: 4
+    mem_limit: '8g'
   sourcegraph-frontend-internal:
     cpus: 4
     mem_limit: '4g'
@@ -64,7 +67,7 @@ services:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
-      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080'
+      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080 sourcegraph-frontend-2:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
       # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
       - 'SRC_SITE_ADDRESS=ec2-54-188-66-76.us-west-2.compute.amazonaws.com'
