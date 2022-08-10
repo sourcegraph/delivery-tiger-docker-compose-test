@@ -17,13 +17,13 @@ services:
     mem_limit: '37g'
   zoekt-webserver-0:
     cpus: 18
-    mem_limit: '70g'
+    mem_limit: '50g'
   zoekt-webserver-1:
     cpus: 18
-    mem_limit: '70g'
+    mem_limit: '50g'
   zoekt-webserver-2:
     cpus: 18
-    mem_limit: '70g'
+    mem_limit: '50g'
   gitserver-0:
     cpus: 8
     mem_limit: '16g'
@@ -59,11 +59,12 @@ services:
   sourcegraph-frontend-internal:
     cpus: 4
     mem_limit: '6g'
+
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
-      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
+      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
       # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
       - 'SRC_SITE_ADDRESS=ec2-54-188-66-76.us-west-2.compute.amazonaws.com'
