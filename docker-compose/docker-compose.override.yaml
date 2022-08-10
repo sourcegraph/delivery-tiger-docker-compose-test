@@ -26,10 +26,13 @@ services:
     mem_limit: '50g'
   gitserver-0:
     cpus: 6
-    mem_limit: '16g'
+    mem_limit: '35g'
   gitserver-1:
     cpus: 6
-    mem_limit: '16g'
+    mem_limit: '35g'
+  gitserver-2:
+    cpus: 6
+    mem_limit: '35g'
   searcher-0:
     cpus: 12
     mem_limit: '16g'
@@ -62,7 +65,6 @@ services:
   sourcegraph-frontend-internal:
     cpus: 4
     mem_limit: '4g'
-
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
