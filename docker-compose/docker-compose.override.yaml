@@ -64,7 +64,7 @@ services:
     mem_limit: '8g'
   sourcegraph-frontend-internal:
     cpus: 4
-    mem_limit: '4g'
+    mem_limit: '8g'
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
