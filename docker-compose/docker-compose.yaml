@@ -160,7 +160,7 @@ services:
         condition: service_healthy
   sourcegraph-frontend-1:
     container_name: sourcegraph-frontend-1
-    image: 'index.docker.io/sourcegraph/frontend:3.40.2@sha256:11d274d736c471fd9fb0bce7129cdc8b84e769efdd2e2c418009988c8eb67fdf'
+    image: 'index.docker.io/sourcegraph/frontend:3.42.2@sha256:abe3ed2071e9e8020209bf0f4cf5cb4432fb25e60f776fedb9be0423747e259e'
     cpus: 4
     mem_limit: '8g'
     environment:
@@ -196,7 +196,7 @@ services:
         condition: service_healthy
   sourcegraph-frontend-2:
     container_name: sourcegraph-frontend-2
-    image: 'index.docker.io/sourcegraph/frontend:3.40.2@sha256:11d274d736c471fd9fb0bce7129cdc8b84e769efdd2e2c418009988c8eb67fdf'
+    image: 'index.docker.io/sourcegraph/frontend:3.42.2@sha256:abe3ed2071e9e8020209bf0f4cf5cb4432fb25e60f776fedb9be0423747e259e'
     cpus: 4
     mem_limit: '8g'
     environment:
@@ -299,7 +299,7 @@ services:
     hostname: gitserver-0
   gitserver-1:
     container_name: gitserver-1
-    image: 'index.docker.io/sourcegraph/gitserver:3.40.2@sha256:aad2a6a27e5373713dc9f010295a747a1c3a8cd445c797647a001da9d55134da'
+    image: 'index.docker.io/sourcegraph/gitserver:3.42.2@sha256:2244a267ddb88981885a07d69ebbda56d562202c2fd13c48e939f9150110b5ac'
     cpus: 4
     mem_limit: '8g'
     environment:
@@ -313,7 +313,7 @@ services:
     hostname: gitserver-1
   gitserver-2:
     container_name: gitserver-2
-    image: 'index.docker.io/sourcegraph/gitserver:3.40.2@sha256:aad2a6a27e5373713dc9f010295a747a1c3a8cd445c797647a001da9d55134da'
+    image: 'index.docker.io/sourcegraph/gitserver:3.42.2@sha256:2244a267ddb88981885a07d69ebbda56d562202c2fd13c48e939f9150110b5ac'
     cpus: 4
     mem_limit: '8g'
     environment:
@@ -349,7 +349,7 @@ services:
     hostname: zoekt-indexserver-0
   zoekt-indexserver-1:
     container_name: zoekt-indexserver-1
-    image: 'index.docker.io/sourcegraph/search-indexer:3.40.2@sha256:7b1a411dc8a207f4f1743edd2377ae2a5cad4ae4801a9a0388b31bc24db23fa5'
+    image: 'index.docker.io/sourcegraph/search-indexer:3.42.2@sha256:f6e2159c7e91aa5219815ee5aa80d86ac9e59626dfba195016e50b913d3dfc03'
     cpus: 8
     mem_limit: '16g'
     environment:
@@ -363,7 +363,7 @@ services:
     hostname: zoekt-indexserver-1
   zoekt-indexserver-2:
     container_name: zoekt-indexserver-2
-    image: 'index.docker.io/sourcegraph/search-indexer:3.40.2@sha256:7b1a411dc8a207f4f1743edd2377ae2a5cad4ae4801a9a0388b31bc24db23fa5'
+    image: 'index.docker.io/sourcegraph/search-indexer:3.42.2@sha256:f6e2159c7e91aa5219815ee5aa80d86ac9e59626dfba195016e50b913d3dfc03'
     cpus: 8
     mem_limit: '16g'
     environment:
@@ -401,7 +401,7 @@ services:
     hostname: zoekt-webserver-0
   zoekt-webserver-1:
     container_name: zoekt-webserver-1
-    image: 'index.docker.io/sourcegraph/indexed-searcher:3.42.0@sha256:10d35c62a42099875a0286e6aa147c44d0adc63b565260a8e60abfd54497299e'
+    image: 'index.docker.io/sourcegraph/indexed-searcher:3.42.2@sha256:10d35c62a42099875a0286e6aa147c44d0adc63b565260a8e60abfd54497299e'
     cpus: 8
     mem_limit: '50g'
     environment:
@@ -419,7 +419,7 @@ services:
     hostname: zoekt-webserver-1
   zoekt-webserver-2:
     container_name: zoekt-webserver-2
-    image: 'index.docker.io/sourcegraph/indexed-searcher:3.42.0@sha256:10d35c62a42099875a0286e6aa147c44d0adc63b565260a8e60abfd54497299e'
+    image: 'index.docker.io/sourcegraph/indexed-searcher:3.42.2@sha256:10d35c62a42099875a0286e6aa147c44d0adc63b565260a8e60abfd54497299e'
     cpus: 8
     mem_limit: '50g'
     environment:
@@ -461,7 +461,7 @@ services:
     restart: always
   searcher-1:
     container_name: searcher-1
-    image: 'index.docker.io/sourcegraph/searcher:3.42.0@sha256:7354d4b6031e999d02d7b9a5d47ca5351dece76b318a298bd19bc9e0b207d315'
+    image: 'index.docker.io/sourcegraph/searcher:3.42.2@sha256:2abdf41ce42cff712f437060eb6e94d36650a07f137ff44ff3e452da581a0f1a'
     cpus: 2
     mem_limit: '2g'
     environment:
@@ -479,7 +479,7 @@ services:
     restart: always
   searcher-2:
     container_name: searcher-2
-    image: 'index.docker.io/sourcegraph/searcher:3.42.0@sha256:7354d4b6031e999d02d7b9a5d47ca5351dece76b318a298bd19bc9e0b207d315'
+    image: 'index.docker.io/sourcegraph/searcher:3.42.2@sha256:2abdf41ce42cff712f437060eb6e94d36650a07f137ff44ff3e452da581a0f1a'
     cpus: 2
     mem_limit: '2g'
     environment:
