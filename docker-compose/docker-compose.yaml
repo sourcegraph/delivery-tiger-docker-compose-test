@@ -134,7 +134,7 @@ services:
       - PGHOST=pgsql
       - CODEINTEL_PGHOST=codeintel-db
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
-      - 'SRC_GIT_SERVERS=gitserver-0:3178'
+      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
@@ -176,7 +176,7 @@ services:
       - PGHOST=pgsql
       - CODEINTEL_PGHOST=codeintel-db
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
-      - 'SRC_GIT_SERVERS=gitserver-0:3178'
+      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
@@ -227,6 +227,21 @@ services:
       - sourcegraph
     restart: always
     hostname: gitserver-0
+
+  gitserver-1:
+    container_name: gitserver-1
+    image: 'index.docker.io/sourcegraph/gitserver:3.42.2@sha256:2244a267ddb88981885a07d69ebbda56d562202c2fd13c48e939f9150110b5ac'
+    cpus: 4
+    mem_limit: '8g'
+    environment:
+      - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
+      - JAEGER_AGENT_HOST=jaeger
+    volumes:
+      - 'gitserver-1:/data/repos'
+    networks:
+      - sourcegraph
+    restart: always
+    hostname: gitserver-1
 
   # Description: Backend for indexed text search operations.
   #
@@ -379,7 +394,7 @@ services:
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - JAEGER_AGENT_HOST=jaeger
-      - 'SRC_GIT_SERVERS=gitserver-0:3178'
+      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178'
       - 'SEARCHER_URL=http://searcher-0:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070'
@@ -756,6 +771,7 @@ services:
 volumes:
   caddy:
   gitserver-0:
+  gitserver-1:
   grafana:
   pgsql:
   codeintel-db:
