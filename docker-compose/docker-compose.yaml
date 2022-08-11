@@ -235,12 +235,14 @@ services:
       - sourcegraph
     restart: always
     hostname: gitserver-0
+
   gitserver-1:
     container_name: gitserver-1
     <<: *gitserver
     volumes:
       - 'gitserver-1:/data/repos'
     hostname: gitserver-1
+
   gitserver-2:
     container_name: gitserver-2
     <<: *gitserver
