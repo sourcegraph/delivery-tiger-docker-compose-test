@@ -236,17 +236,17 @@ services:
     restart: always
     hostname: gitserver-0
   gitserver-1:
-    <<: *gitserver
     container_name: gitserver-1
+    <<: *gitserver
     volumes:
       - 'gitserver-1:/data/repos'
     hostname: gitserver-1
   gitserver-2:
+    container_name: gitserver-2
     <<: *gitserver
-    container_name: gitserver-1
     volumes:
-      - 'gitserver-1:/data/repos'
-    hostname: gitserver-1
+      - 'gitserver-2:/data/repos'
+    hostname: gitserver-2
   # Description: Backend for indexed text search operations.
   #
   # Disk: 200GB / persistent SSD
