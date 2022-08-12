@@ -6,96 +6,42 @@ services:
   redis-store:
     cpus: 1
     mem_limit: '1g'
-
-  # ZOEKT
   zoekt-indexserver-0:
     cpus: 8
     mem_limit: '37g'
   zoekt-indexserver-1:
-    container_name: zoekt-indexserver-1
-    <<: *indexserver
     cpus: 8
     mem_limit: '37g'
-    environment:
-      - 'HOSTNAME=zoekt-webserver-1:6070'
-      - 'SRC_FRONTEND_INTERNAL=http://sourcegraph-frontend-internal:3090'
-    volumes:
-      - 'zoekt-1-shared:/data/index'
-    hostname: zoekt-indexserver-1
   zoekt-indexserver-2:
-    container_name: zoekt-indexserver-2
-    <<: *indexserver
     cpus: 8
     mem_limit: '37g'
-    environment:
-      - 'HOSTNAME=zoekt-webserver-2:6070'
-      - 'SRC_FRONTEND_INTERNAL=http://sourcegraph-frontend-internal:3090'
-    volumes:
-      - 'zoekt-2-shared:/data/index'
-    hostname: zoekt-indexserver-2
   zoekt-webserver-0:
     cpus: 18
     mem_limit: '50g'
   zoekt-webserver-1:
-    container_name: zoekt-webserver-1
-    <<: *webserver
     cpus: 18
     mem_limit: '50g'
-    environment:
-      - 'HOSTNAME=zoekt-webserver-1:6070'
-    volumes:
-      - 'zoekt-1-shared:/data/index'
-    hostname: zoekt-webserver-1
   zoekt-webserver-2:
-    container_name: zoekt-webserver-2
-    <<: *webserver
     cpus: 18
     mem_limit: '50g'
-    environment:
-      - 'HOSTNAME=zoekt-webserver-2:6070'
-    volumes:
-      - 'zoekt-2-shared:/data/index'
-    hostname: zoekt-webserver-2
-
-  # GITSERVER
   gitserver-0:
     cpus: 6
     mem_limit: '35g'
   gitserver-1:
-    container_name: gitserver-1
-    <<: *gitserver
     cpus: 6
     mem_limit: '35g'
-    volumes:
-      - 'gitserver-1:/data/repos'
-    hostname: gitserver-1
   gitserver-2:
-    container_name: gitserver-2
-    <<: *gitserver
     cpus: 6
     mem_limit: '35g'
-    volumes:
-      - 'gitserver-2:/data/repos'
-    hostname: gitserver-2
-
-  # SEARCHER
   searcher-0:
     cpus: 18
     mem_limit: '35g'
   searcher-1:
-    <<: *searcher
-    container_name: searcher-1
     cpus: 18
     mem_limit: '35g'
-    volumes:
-      - 'searcher-1:/mnt/cache'
   searcher-2:
-    <<: *searcher
-    container_name: searcher-2
     cpus: 18
     mem_limit: '35g'
-    volumes:
-      - 'searcher-2:/mnt/cache'
   symbols-0:
     cpus: 6
     mem_limit: '12g'
@@ -103,34 +49,22 @@ services:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
   pgsql:
-    cpus: 4
+    cpus: 6
     mem_limit: '12g'
   minio:
     cpus: 0.5
-  sourcegraph-frontend-internal:
-    cpus: 4
-    mem_limit: '8g'
-  
-  # FRONTEND
   sourcegraph-frontend-0:
-    cpus: 4
-    mem_limit: '8g'
+    cpus: 6
+    mem_limit: '12g'
   sourcegraph-frontend-1:
-    <<: *frontend
-    cpus: 4
-    mem_limit: '8g'
-    container_name: sourcegraph-frontend-1
-    volumes:
-      - 'sourcegraph-frontend-1:/mnt/cache'
+    cpus: 6
+    mem_limit: '12g'
   sourcegraph-frontend-2:
-    <<: *frontend
-    cpus: 4
-    mem_limit: '8g'
-    container_name: sourcegraph-frontend-2
-    volumes:
-      - 'sourcegraph-frontend-2:/mnt/cache'
-  
-  # CADDY
+    cpus: 6
+    mem_limit: '12g'
+  sourcegraph-frontend-internal:
+    cpus: 6
+    mem_limit: '12g'
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
@@ -157,13 +91,3 @@ services:
       # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
       # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
       - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
-volumes:
-  <<: *volumes
-  gitserver-1:
-  gitserver-2:
-  searcher-1:
-  searcher-2:
-  sourcegraph-frontend-1:
-  sourcegraph-frontend-2:
-  zoekt-1-shared:
-  zoekt-2-shared:
