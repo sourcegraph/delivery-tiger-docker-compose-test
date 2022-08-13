@@ -34,13 +34,13 @@ services:
     cpus: 6
     mem_limit: '35g'
   searcher-0:
-    cpus: 18
+    cpus: 12
     mem_limit: '35g'
   searcher-1:
-    cpus: 18
+    cpus: 12
     mem_limit: '35g'
   searcher-2:
-    cpus: 18
+    cpus: 12
     mem_limit: '35g'
   symbols-0:
     cpus: 6
@@ -49,21 +49,21 @@ services:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
   pgsql:
-    cpus: 6
+    cpus: 8
     mem_limit: '12g'
   minio:
     cpus: 0.5
   sourcegraph-frontend-0:
-    cpus: 6
+    cpus: 8
     mem_limit: '12g'
   sourcegraph-frontend-1:
-    cpus: 6
+    cpus: 8
     mem_limit: '12g'
   sourcegraph-frontend-2:
-    cpus: 6
+    cpus: 8
     mem_limit: '12g'
   sourcegraph-frontend-internal:
-    cpus: 6
+    cpus: 4
     mem_limit: '12g'
   caddy:
     environment:
