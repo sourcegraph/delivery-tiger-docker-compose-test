@@ -63,7 +63,7 @@ services:
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
   pgsql:
     cpus: 8
-    mem_limit: '12g'
+    mem_limit: '16g'
   minio:
     cpus: 0.5
   sourcegraph-frontend-0:
