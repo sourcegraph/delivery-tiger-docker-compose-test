@@ -55,16 +55,16 @@ services:
     cpus: 0.5
   sourcegraph-frontend-0:
     cpus: 8
-    mem_limit: '12g'
+    mem_limit: '24g'
   sourcegraph-frontend-1:
     cpus: 8
-    mem_limit: '12g'
+    mem_limit: '24g'
   sourcegraph-frontend-2:
     cpus: 8
-    mem_limit: '12g'
+    mem_limit: '24g'
   sourcegraph-frontend-internal:
-    cpus: 4
-    mem_limit: '12g'
+    cpus: 8
+    mem_limit: '24g'
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
