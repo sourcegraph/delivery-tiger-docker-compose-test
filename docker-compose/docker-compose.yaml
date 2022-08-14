@@ -135,7 +135,7 @@ services:
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
-      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181 http://searcher-4:3181 http://searcher-5:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -201,7 +201,7 @@ services:
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
-      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181 http://searcher-4:3181 http://searcher-5:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
@@ -430,7 +430,16 @@ services:
     container_name: searcher-3
     volumes:
       - 'searcher-3:/mnt/cache'
-
+  searcher-4:
+    <<: *searcher
+    container_name: searcher-4
+    volumes:
+      - 'searcher-4:/mnt/cache'
+  searcher-5:
+    <<: *searcher
+    container_name: searcher-5
+    volumes:
+      - 'searcher-5:/mnt/cache'
   # Description: Rate-limiting proxy for the GitHub API.
   #
   # CPU: 1
@@ -510,7 +519,7 @@ services:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - JAEGER_AGENT_HOST=jaeger
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
-      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181'
+      - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181 http://searcher-4:3181 http://searcher-5:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
@@ -903,6 +912,8 @@ volumes:
   searcher-1:
   searcher-2:
   searcher-3:
+  searcher-4:
+  searcher-5:
   sourcegraph-frontend-0:
   sourcegraph-frontend-1:
   sourcegraph-frontend-2:

@@ -7,60 +7,66 @@ services:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 6
+    cpus: 4
     mem_limit: '20g'
   zoekt-indexserver-1:
-    cpus: 6
+    cpus: 4
     mem_limit: '20g'
   zoekt-indexserver-2:
-    cpus: 6
+    cpus: 4
     mem_limit: '20g'
   zoekt-indexserver-3:
-    cpus: 6
+    cpus: 4
     mem_limit: '20g'
   zoekt-indexserver-4:
-    cpus: 6
+    cpus: 4
     mem_limit: '20g'
   zoekt-webserver-0:
-    cpus: 8
+    cpus: 10
     mem_limit: '20g'
   zoekt-webserver-1:
-    cpus: 8
+    cpus: 10
     mem_limit: '20g'
   zoekt-webserver-2:
-    cpus: 8
+    cpus: 10
     mem_limit: '20g'
   zoekt-webserver-3:
-    cpus: 8
+    cpus: 10
     mem_limit: '20g'    
   zoekt-webserver-4:
-    cpus: 8
+    cpus: 10
     mem_limit: '20g'  
   gitserver-0:
     cpus: 6
-    mem_limit: '20g'
+    mem_limit: '15g'
   gitserver-1:
     cpus: 6
-    mem_limit: '20g'
+    mem_limit: '15g'
   gitserver-2:
     cpus: 6
-    mem_limit: '20g'
+    mem_limit: '15g'
   gitserver-3:
     cpus: 6
-    mem_limit: '20g'
+    mem_limit: '15g'
 
   searcher-0:
-    cpus: 8
-    mem_limit: '25g'
+    cpus: 4
+    mem_limit: '15g'
   searcher-1:
-    cpus: 8
-    mem_limit: '25g'
+    cpus: 4
+    mem_limit: '15g'
   searcher-2:
-    cpus: 8
-    mem_limit: '25g'
+    cpus: 4
+    mem_limit: '15g'
   searcher-3:
-    cpus: 8
-    mem_limit: '25g'
+    cpus: 4
+    mem_limit: '15g'
+  searcher-4:
+    cpus: 4
+    mem_limit: '15g'
+  searcher-5:
+    cpus: 4
+    mem_limit: '15g'
   symbols-0:
     cpus: 6
     mem_limit: '12g'
@@ -69,30 +75,30 @@ services:
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
   pgsql:
     cpus: 8
-    mem_limit: '16g'
+    mem_limit: '32g'
   minio:
     cpus: 0.5
   sourcegraph-frontend-0:
     cpus: 4
-    mem_limit: '10g'
+    mem_limit: '8g'
   sourcegraph-frontend-1:
     cpus: 4
-    mem_limit: '10g'
+    mem_limit: '8g'
   sourcegraph-frontend-2:
     cpus: 4
-    mem_limit: '10g'
+    mem_limit: '8g'
   sourcegraph-frontend-3:
     cpus: 4
-    mem_limit: '10g'
+    mem_limit: '8g'
   sourcegraph-frontend-4:
     cpus: 4
-    mem_limit: '10g'
+    mem_limit: '8g'
   sourcegraph-frontend-5:
     cpus: 4
-    mem_limit: '10g'
+    mem_limit: '8g'
   sourcegraph-frontend-internal:
     cpus: 4
-    mem_limit: '10g'
+    mem_limit: '8g'
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
