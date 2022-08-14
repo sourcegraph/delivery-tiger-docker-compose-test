@@ -137,7 +137,7 @@ services:
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'GRAFANA_SERVER_URL=http://grafana:3370'
@@ -193,7 +193,7 @@ services:
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'GRAFANA_SERVER_URL=http://grafana:3000'
@@ -240,14 +240,12 @@ services:
       - sourcegraph
     restart: always
     hostname: gitserver-0
-
   gitserver-1:
     <<: *gitserver
     container_name: gitserver-1
     volumes:
       - 'gitserver-1:/data/repos'
     hostname: gitserver-1
-
   gitserver-2:
     <<: *gitserver
     container_name: gitserver-2
@@ -260,6 +258,7 @@ services:
     volumes:
       - 'gitserver-3:/data/repos'
     hostname: gitserver-3
+
   # Description: Backend for indexed text search operations.
   #
   # Disk: 200GB / persistent SSD
@@ -291,7 +290,6 @@ services:
     volumes:
       - 'zoekt-1-shared:/data/index'
     hostname: zoekt-indexserver-1
-
   zoekt-indexserver-2:
     <<: *indexserver
     container_name: zoekt-indexserver-2
@@ -301,7 +299,6 @@ services:
     volumes:
       - 'zoekt-2-shared:/data/index'
     hostname: zoekt-indexserver-2
-
   zoekt-indexserver-3:
     <<: *indexserver
     container_name: zoekt-indexserver-3
@@ -311,6 +308,15 @@ services:
     volumes:
       - 'zoekt-3-shared:/data/index'
     hostname: zoekt-indexserver-3
+  zoekt-indexserver-4:
+    <<: *indexserver
+    container_name: zoekt-indexserver-4
+    environment:
+      - 'HOSTNAME=zoekt-webserver-4:6070'
+      - 'SRC_FRONTEND_INTERNAL=http://sourcegraph-frontend-internal:3090'
+    volumes:
+      - 'zoekt-4-shared:/data/index'
+    hostname: zoekt-indexserver-4
 
   # Description: Backend for indexed text search operations.
   #
@@ -364,6 +370,14 @@ services:
       - 'zoekt-3-shared:/data/index'
     hostname: zoekt-webserver-3
 
+  zoekt-webserver-4:
+    <<: *webserver
+    container_name: zoekt-webserver-4
+    environment:
+      - 'HOSTNAME=zoekt-webserver-4:6070'
+    volumes:
+      - 'zoekt-4-shared:/data/index'
+    hostname: zoekt-webserver-4
   # Description: Backend for text search operations.
   #
   # Disk: 128GB / non-persistent SSD
@@ -488,7 +502,7 @@ services:
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181 http://searcher-3:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
     volumes:
       - 'worker:/mnt/cache'
@@ -883,11 +897,14 @@ volumes:
   sourcegraph-frontend-1:
   sourcegraph-frontend-2:
   sourcegraph-frontend-3:
+  sourcegraph-frontend-4:
+  sourcegraph-frontend-5:
   sourcegraph-frontend-internal-0:
   symbols-0:
   zoekt-0-shared:
   zoekt-1-shared:
   zoekt-2-shared:
   zoekt-3-shared:
+  zoekt-4-shared:
 networks:
   sourcegraph:
