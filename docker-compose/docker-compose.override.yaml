@@ -50,22 +50,22 @@ services:
     mem_limit: '15g'
 
   searcher-0:
-    cpus: 4
+    cpus: 6
     mem_limit: '15g'
   searcher-1:
-    cpus: 4
+    cpus: 6
     mem_limit: '15g'
   searcher-2:
-    cpus: 4
+    cpus: 6
     mem_limit: '15g'
   searcher-3:
-    cpus: 4
+    cpus: 6
     mem_limit: '15g'
   searcher-4:
-    cpus: 4
+    cpus: 6
     mem_limit: '15g'
   searcher-5:
-    cpus: 4
+    cpus: 6
     mem_limit: '15g'
   symbols-0:
     cpus: 6
