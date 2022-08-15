@@ -29,6 +29,8 @@
     job: zoekt-indexserver
   targets:
     - zoekt-indexserver-0:6072
+    - zoekt-indexserver-1:6072
+    - zoekt-indexserver-2:6072
 - labels:
     job: sourcegraph-frontend
   targets:
@@ -37,6 +39,8 @@
     job: gitserver
   targets:
     - gitserver-0:6060
+    - gitserver-1:6060
+    - gitserver-2:6060
 - labels:
     job: searcher
   targets:
