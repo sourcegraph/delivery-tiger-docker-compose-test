@@ -24,6 +24,12 @@ services:
   zoekt-webserver-2:
     cpus: 24
     mem_limit: '100g'
+  zoekt-indexserver-3:
+    cpus: 8
+    mem_limit: '40g'
+  zoekt-webserver-3:
+    cpus: 24
+    mem_limit: '100g'
   gitserver-0:
     cpus: 18
     mem_limit: '30g'
