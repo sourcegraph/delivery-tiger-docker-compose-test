@@ -11,7 +11,7 @@ source ./replicas.sh
 # Ports exposed to the public internet: none
 #
 # Also add the following volume mount for container monitoring on MacOS:
-#   --volume='/var/run/docker.sock:/var/run/docker.sock:ro' 
+#   --volume='/var/run/docker.sock:/var/run/docker.sock:ro'
 #
 # You may remove the --privileged flag to run with reduced privileges.
 # `cadvisor` requires root privileges in order to display provisioning metrics.
@@ -31,7 +31,7 @@ sudo docker run --detach \
     --volume=/dev/disk/:/dev/disk:ro \
     --privileged \
     --device=/dev/kmsg \
-    index.docker.io/sourcegraph/cadvisor:3.42.2@sha256:56db7fe6777df020d03957b92a15f47ba23a7ab85ba5b3ff65dc5a8276d3b260 \
+    index.docker.io/sourcegraph/cadvisor:3.43.0@sha256:91aed2aa386adf0ec6042f1c48c25bd1daff6e8b90ca155448eeeb6270b6dc05 \
     --port=8080
 
 echo "Deployed cadvisor"
