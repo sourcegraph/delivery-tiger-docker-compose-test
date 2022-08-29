@@ -2,49 +2,74 @@ version: '2.4'
 services:
   redis-cache:
     cpus: 1
-    mem_limit: '4g'
+    mem_limit: '3g'
   redis-store:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 8
-    mem_limit: '40g'
-  zoekt-webserver-0:
-    cpus: 24
-    mem_limit: '100g'
-  zoekt-indexserver-1:
-    cpus: 8
-    mem_limit: '40g'
-  zoekt-webserver-1:
-    cpus: 24
-    mem_limit: '100g'
-  zoekt-indexserver-2:
-    cpus: 8
-    mem_limit: '40g'
-  zoekt-webserver-2:
-    cpus: 24
-    mem_limit: '100g'
-  zoekt-indexserver-3:
-    cpus: 8
-    mem_limit: '40g'
-  zoekt-webserver-3:
-    cpus: 24
-    mem_limit: '100g'
-  gitserver-0:
-    cpus: 18
-    mem_limit: '30g'
-  gitserver-1:
-    cpus: 18
-    mem_limit: '30g'
-  gitserver-2:
-    cpus: 18
-    mem_limit: '30g'
-  searcher-0:
     cpus: 4
-    mem_limit: '24g'
+    mem_limit: '20g'
+  zoekt-indexserver-1:
+    cpus: 4
+    mem_limit: '20g'
+  zoekt-indexserver-2:
+    cpus: 4
+    mem_limit: '20g'
+  zoekt-indexserver-3:
+    cpus: 4
+    mem_limit: '20g'
+  zoekt-indexserver-4:
+    cpus: 4
+    mem_limit: '20g'
+  zoekt-webserver-0:
+    cpus: 10
+    mem_limit: '20g'
+  zoekt-webserver-1:
+    cpus: 10
+    mem_limit: '20g'
+  zoekt-webserver-2:
+    cpus: 10
+    mem_limit: '20g'
+  zoekt-webserver-3:
+    cpus: 10
+    mem_limit: '20g'    
+  zoekt-webserver-4:
+    cpus: 10
+    mem_limit: '20g'  
+  gitserver-0:
+    cpus: 6
+    mem_limit: '15g'
+  gitserver-1:
+    cpus: 6
+    mem_limit: '15g'
+  gitserver-2:
+    cpus: 6
+    mem_limit: '15g'
+  gitserver-3:
+    cpus: 6
+    mem_limit: '15g'
+
+  searcher-0:
+    cpus: 6
+    mem_limit: '15g'
+  searcher-1:
+    cpus: 6
+    mem_limit: '15g'
+  searcher-2:
+    cpus: 6
+    mem_limit: '15g'
+  searcher-3:
+    cpus: 6
+    mem_limit: '15g'
+  searcher-4:
+    cpus: 6
+    mem_limit: '15g'
+  searcher-5:
+    cpus: 6
+    mem_limit: '15g'
   symbols-0:
-    cpus: 8
-    mem_limit: '16g'
+    cpus: 6
+    mem_limit: '12g'
     environment:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
@@ -53,27 +78,32 @@ services:
     mem_limit: '32g'
   minio:
     cpus: 0.5
-    mem_limit: '4g'
-  caddy:
-    container_name: caddy
-    image: 'index.docker.io/caddy:2.5.1-alpine@sha256:6e62b63d4d7a4826f9e93c904a0e5b886a8bea2234b6569e300924282a2e8e6c'
+  sourcegraph-frontend-0:
+    cpus: 8
+    mem_limit: '24g'
+  sourcegraph-frontend-1:
+    cpus: 8
+    mem_limit: '24g'
+  sourcegraph-frontend-internal:
     cpus: 4
-    mem_limit: '4g'
+    mem_limit: '8g'
+  caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
-      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080'
+      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
+      # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
       - 'SRC_SITE_ADDRESS=ec2-18-236-133-217.us-west-2.compute.amazonaws.com'
       #
       # Uncomment & update the following line when using HTTPS with Let's Encrypt
-      - 'SRC_ACME_EMAIL=james.cotter@sourcegraph.com'
+      - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
     volumes:
       - 'caddy:/caddy-storage'
       #
       # IMPORTANT: if a customer uses a reverse proxy in front of Caddy
       # the configuration files below must be updated to include trusted_proxies
-      # 
+      #
       # Comment out the following line when using HTTPS with either Let's Encrypt or custom certificates
       # - '../caddy/builtins/http.Caddyfile:/etc/caddy/Caddyfile'
       #
@@ -83,12 +113,3 @@ services:
       # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
       # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
       - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
-      #
-      # Uncomment the following line when using HTTPS with custom certificates
-      # - '../caddy/builtins/https.custom-cert.Caddyfile:/etc/caddy/Caddyfile'
-      #
-      # Uncomment / update the following line when using HTTPS with custom certificates
-      # - '/LOCAL/CERT/PATH.pem:/sourcegraph.pem'
-      #
-      # Uncomment / update the following line when using HTTPS with custom certificates
-      # - '/LOCAL/KEY/PATH.key:/sourcegraph.key'
