@@ -47,12 +47,11 @@
   targets:
     - gitserver-0:6060
     - gitserver-1:6060
-    - gitserver-2:6060
-    - gitserver-3:6060
 - labels:
     job: searcher
   targets:
     - searcher-0:6060
+    - searcher-1:6060
 - labels:
     job: symbols
   targets:

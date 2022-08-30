@@ -38,35 +38,17 @@ services:
     mem_limit: '20g'  
   gitserver-0:
     cpus: 12
-    mem_limit: '15g'
+    mem_limit: '20g'
   gitserver-1:
-    cpus: 6
-    mem_limit: '15g'
-  gitserver-2:
-    cpus: 6
-    mem_limit: '15g'
-  gitserver-3:
-    cpus: 6
-    mem_limit: '15g'
+    cpus: 12
+    mem_limit: '20g'
 
   searcher-0:
-    cpus: 6
-    mem_limit: '15g'
+    cpus: 18
+    mem_limit: '25g'
   searcher-1:
-    cpus: 6
-    mem_limit: '15g'
-  searcher-2:
-    cpus: 6
-    mem_limit: '15g'
-  searcher-3:
-    cpus: 6
-    mem_limit: '15g'
-  searcher-4:
-    cpus: 6
-    mem_limit: '15g'
-  searcher-5:
-    cpus: 6
-    mem_limit: '15g'
+    cpus: 18
+    mem_limit: '25g'
   symbols-0:
     cpus: 6
     mem_limit: '12g'
