@@ -21,21 +21,27 @@ services:
   zoekt-indexserver-4:
     cpus: 4
     mem_limit: '20g'
+  zoekt-indexserver-5:
+    cpus: 4
+    mem_limit: '20g'
   zoekt-webserver-0:
-    cpus: 10
-    mem_limit: '20g'
+    cpus: 6
+    mem_limit: '35g'
   zoekt-webserver-1:
-    cpus: 10
-    mem_limit: '20g'
+    cpus: 6
+    mem_limit: '35g'
   zoekt-webserver-2:
-    cpus: 10
-    mem_limit: '20g'
+    cpus: 6
+    mem_limit: '35g'
   zoekt-webserver-3:
-    cpus: 10
-    mem_limit: '20g'    
+    cpus: 6
+    mem_limit: '35g'    
   zoekt-webserver-4:
-    cpus: 10
-    mem_limit: '20g'  
+    cpus: 6
+    mem_limit: '35g'  
+  zoekt-webserver-5:
+    cpus: 6
+    mem_limit: '35g'  
   gitserver-0:
     cpus: 6
     mem_limit: '15g'
@@ -58,21 +64,14 @@ services:
   searcher-2:
     cpus: 6
     mem_limit: '15g'
-  searcher-3:
-    cpus: 6
-    mem_limit: '15g'
-  searcher-4:
-    cpus: 6
-    mem_limit: '15g'
-  searcher-5:
-    cpus: 6
-    mem_limit: '15g'
+
   symbols-0:
     cpus: 6
     mem_limit: '12g'
     environment:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
+
   pgsql:
     cpus: 8
     mem_limit: '32g'
@@ -85,7 +84,7 @@ services:
     cpus: 8
     mem_limit: '24g'
   sourcegraph-frontend-internal:
-    cpus: 4
+    cpus: 8
     mem_limit: '8g'
   caddy:
     environment:
@@ -94,7 +93,7 @@ services:
       - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
       # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
-      - 'SRC_SITE_ADDRESS=ec2-18-236-133-217.us-west-2.compute.amazonaws.com'
+      - 'SRC_SITE_ADDRESS=ec2-34-221-201-222.us-west-2.compute.amazonaws.com'
       #
       # Uncomment & update the following line when using HTTPS with Let's Encrypt
       - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
