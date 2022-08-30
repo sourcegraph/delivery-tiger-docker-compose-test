@@ -2,27 +2,27 @@ version: '2.4'
 services:
   redis-cache:
     cpus: 1
-    mem_limit: '3g'
+    mem_limit: '7g'
   redis-store:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 4
+    cpus: 6
     mem_limit: '25g'
   zoekt-indexserver-1:
-    cpus: 4
+    cpus: 6
     mem_limit: '25g'
   zoekt-indexserver-2:
-    cpus: 4
+    cpus: 6
     mem_limit: '25g'
   zoekt-indexserver-3:
-    cpus: 4
+    cpus: 6
     mem_limit: '25g'
   zoekt-indexserver-4:
-    cpus: 4
+    cpus: 6
     mem_limit: '25g'
   zoekt-indexserver-5:
-    cpus: 4
+    cpus: 6
     mem_limit: '25g'
   zoekt-webserver-0:
     cpus: 6
@@ -43,17 +43,17 @@ services:
     cpus: 6
     mem_limit: '35g'  
   gitserver-0:
-    cpus: 6
-    mem_limit: '15g'
+    cpus: 8
+    mem_limit: '20g'
   gitserver-1:
-    cpus: 6
-    mem_limit: '15g'
+    cpus: 8
+    mem_limit: '20g'
   gitserver-2:
-    cpus: 6
-    mem_limit: '15g'
+    cpus: 8
+    mem_limit: '20g'
   gitserver-3:
-    cpus: 6
-    mem_limit: '15g'
+    cpus: 8
+    mem_limit: '20g'
 
   searcher-0:
     cpus: 6
@@ -66,7 +66,13 @@ services:
     mem_limit: '15g'
 
   symbols-0:
-    cpus: 6
+    cpus: 4
+    mem_limit: '12g'
+    environment:
+      - USE_ROCKSKIP=true
+      - ROCKSKIP_MIN_REPO_SIZE_MB=1000
+  symbols-1:
+    cpus: 4
     mem_limit: '12g'
     environment:
       - USE_ROCKSKIP=true

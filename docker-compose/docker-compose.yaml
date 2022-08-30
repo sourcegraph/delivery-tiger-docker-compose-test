@@ -136,7 +136,7 @@ services:
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
-      - 'SYMBOLS_URL=http://symbols-0:3184'
+      - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
@@ -182,7 +182,7 @@ services:
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
-      - 'SYMBOLS_URL=http://symbols-0:3184'
+      - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
@@ -496,7 +496,7 @@ services:
       - JAEGER_AGENT_HOST=jaeger
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
-      - 'SYMBOLS_URL=http://symbols-0:3184'
+      - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
     volumes:
@@ -532,7 +532,7 @@ services:
   # Ports exposed to other Sourcegraph services: 3184/TCP 6060/TCP
   # Ports exposed to the public internet: none
   #
-  symbols-0:
+  symbols-0: &symbols
     container_name: symbols-0
     image: 'index.docker.io/sourcegraph/symbols:3.43.0@sha256:b242e3cfa5cd4cc9145ba6b6cd1aefeec1f4b54ff0791041107e29043812c559'
     cpus: 2
@@ -551,6 +551,11 @@ services:
     networks:
       - sourcegraph
     restart: always
+  symbols-1:
+    <<: *symbols
+    container_name: symbols-1
+    volumes:
+      - 'symbols-1:/mnt/cache'
 
   # Description: Prometheus collects metrics and aggregates them into graphs.
   #
@@ -891,6 +896,7 @@ volumes:
   sourcegraph-frontend-1:
   sourcegraph-frontend-internal-0:
   symbols-0:
+  symbols-1:
   zoekt-0-shared:
   zoekt-1-shared:
   zoekt-2-shared:
