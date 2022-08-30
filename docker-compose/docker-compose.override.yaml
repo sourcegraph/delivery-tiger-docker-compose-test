@@ -8,22 +8,22 @@ services:
     mem_limit: '1g'
   zoekt-indexserver-0:
     cpus: 4
-    mem_limit: '20g'
+    mem_limit: '25g'
   zoekt-indexserver-1:
     cpus: 4
-    mem_limit: '20g'
+    mem_limit: '25g'
   zoekt-indexserver-2:
     cpus: 4
-    mem_limit: '20g'
+    mem_limit: '25g'
   zoekt-indexserver-3:
     cpus: 4
-    mem_limit: '20g'
+    mem_limit: '25g'
   zoekt-indexserver-4:
     cpus: 4
-    mem_limit: '20g'
+    mem_limit: '25g'
   zoekt-indexserver-5:
     cpus: 4
-    mem_limit: '20g'
+    mem_limit: '25g'
   zoekt-webserver-0:
     cpus: 6
     mem_limit: '35g'
