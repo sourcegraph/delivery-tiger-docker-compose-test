@@ -22,22 +22,22 @@ services:
     cpus: 4
     mem_limit: '20g'
   zoekt-webserver-0:
-    cpus: 10
+    cpus: 11
     mem_limit: '20g'
   zoekt-webserver-1:
-    cpus: 10
+    cpus: 11
     mem_limit: '20g'
   zoekt-webserver-2:
-    cpus: 10
+    cpus: 11
     mem_limit: '20g'
   zoekt-webserver-3:
-    cpus: 10
+    cpus: 11
     mem_limit: '20g'    
   zoekt-webserver-4:
-    cpus: 10
+    cpus: 11
     mem_limit: '20g'  
   gitserver-0:
-    cpus: 10
+    cpus: 12
     mem_limit: '15g'
   gitserver-1:
     cpus: 6
@@ -79,10 +79,10 @@ services:
   minio:
     cpus: 0.5
   sourcegraph-frontend-0:
-    cpus: 8
+    cpus: 9
     mem_limit: '24g'
   sourcegraph-frontend-1:
-    cpus: 8
+    cpus: 9
     mem_limit: '24g'
   sourcegraph-frontend-internal:
     cpus: 4
