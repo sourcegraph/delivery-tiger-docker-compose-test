@@ -37,6 +37,9 @@
     - zoekt-indexserver-2:6072
     - zoekt-indexserver-3:6072
     - zoekt-indexserver-4:6072
+    - zoekt-indexserver-5:6072
+    - zoekt-indexserver-6:6072
+    - zoekt-indexserver-7:6072
 - labels:
     job: sourcegraph-frontend
   targets:
@@ -53,10 +56,13 @@
     job: searcher
   targets:
     - searcher-0:6060
+    - searcher-1:6060
+    - searcher-2:6060
 - labels:
     job: symbols
   targets:
     - symbols-0:6060
+    - symbols-1:6060
 - labels:
     job: pgsql
   targets:
