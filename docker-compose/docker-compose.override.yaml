@@ -56,7 +56,7 @@ services:
   symbols-1: *symbols
 
   pgsql:
-    cpus: 8
+    cpus: 16
     mem_limit: '32g'
 
 
