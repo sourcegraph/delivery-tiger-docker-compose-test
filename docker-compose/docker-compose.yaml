@@ -163,6 +163,17 @@ services:
     container_name: sourcegraph-frontend-1
     volumes:
       - 'sourcegraph-frontend-1:/mnt/cache'
+  sourcegraph-frontend-2:
+    <<: *frontend
+    container_name: sourcegraph-frontend-2
+    volumes:
+      - 'sourcegraph-frontend-2:/mnt/cache'
+  sourcegraph-frontend-3:
+    <<: *frontend
+    container_name: sourcegraph-frontend-3
+    volumes:
+      - 'sourcegraph-frontend-3:/mnt/cache'
+      
   # Description: Serves the internal Sourcegraph frontend API.
   #
   # Disk: 128GB / non-persistent SSD
@@ -960,6 +971,8 @@ volumes:
   searcher-2:
   sourcegraph-frontend-0:
   sourcegraph-frontend-1:
+  sourcegraph-frontend-2:
+  sourcegraph-frontend-3:
   sourcegraph-frontend-internal-0:
   symbols-0:
   symbols-1:

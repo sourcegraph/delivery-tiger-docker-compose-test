@@ -3,124 +3,76 @@ services:
   redis-cache:
     cpus: 1
     mem_limit: '7g'
+    
   redis-store:
     cpus: 1
     mem_limit: '1g'
-  zoekt-indexserver-0:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-1:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-2:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-3:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-4:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-5:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-6:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-7:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-8:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-indexserver-9:
-    cpus: 6
-    mem_limit: '24g'
-  zoekt-webserver-0:
-    cpus: 8
-    mem_limit: '24g'
-  zoekt-webserver-1:
-    cpus: 8
-    mem_limit: '24g'
-  zoekt-webserver-2:
-    cpus: 8
-    mem_limit: '24g'
-  zoekt-webserver-3:
-    cpus: 8
-    mem_limit: '24g'    
-  zoekt-webserver-4:
-    cpus: 8
-    mem_limit: '24g'  
-  zoekt-webserver-5:
-    cpus: 8
-    mem_limit: '24g'
-  zoekt-webserver-6:
-    cpus: 8
-    mem_limit: '24g'  
-  zoekt-webserver-7:
-    cpus: 8
-    mem_limit: '24g'  
-  zoekt-webserver-8:
-    cpus: 8
-    mem_limit: '24g'  
-  zoekt-webserver-9:
-    cpus: 8
-    mem_limit: '24g'  
-  gitserver-0:
-    cpus: 20
-    mem_limit: '32g'
-  gitserver-1:
-    cpus: 20
-    mem_limit: '32g'
-  gitserver-2:
-    cpus: 20
-    mem_limit: '32g'
-  gitserver-3:
-    cpus: 20
-    mem_limit: '32g'
 
-  searcher-0:
-    cpus: 12
-    mem_limit: '16g'
-  searcher-1:
-    cpus: 12
-    mem_limit: '16g'
-  searcher-2:
-    cpus: 12
-    mem_limit: '16g'
+  zoekt-indexserver-0: &indexserver
+    cpus: 8
+    mem_limit: '24g'
+  zoekt-indexserver-1: *indexserver
+  zoekt-indexserver-2: *indexserver
+  zoekt-indexserver-3: *indexserver
+  zoekt-indexserver-4: *indexserver
+  zoekt-indexserver-5: *indexserver
+  zoekt-indexserver-6: *indexserver
+  zoekt-indexserver-7: *indexserver
+  zoekt-indexserver-8: *indexserver
+  zoekt-indexserver-9: *indexserver
 
-  symbols-0:
+  zoekt-webserver-0: &webserver
+    cpus: 8
+    mem_limit: '32g'
+  zoekt-webserver-1: *webserver
+  zoekt-webserver-2: *webserver
+  zoekt-webserver-3: *webserver    
+  zoekt-webserver-4: *webserver  
+  zoekt-webserver-5: *webserver
+  zoekt-webserver-6: *webserver  
+  zoekt-webserver-7: *webserver  
+  zoekt-webserver-8: *webserver  
+  zoekt-webserver-9: *webserver  
+
+  gitserver-0: &gitserver
+    cpus: 16
+    mem_limit: '32g'
+  gitserver-1: *gitserver
+  gitserver-2: *gitserver
+  gitserver-3: *gitserver
+
+  searcher-0: &searcher
+    cpus: 16
+    mem_limit: '16g'
+  searcher-1: *searcher
+  searcher-2: *searcher
+
+  symbols-0: &symbols
     cpus: 4
     mem_limit: '12g'
     environment:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
-  symbols-1:
-    cpus: 6
-    mem_limit: '12g'
-    environment:
-      - USE_ROCKSKIP=true
-      - ROCKSKIP_MIN_REPO_SIZE_MB=1000
+  symbols-1: *symbols
 
   pgsql:
     cpus: 8
     mem_limit: '32g'
-  minio:
-    cpus: 0.5
-  sourcegraph-frontend-0:
+
+
+  sourcegraph-frontend-0: &frontend
     cpus: 12
     mem_limit: '24g'
-  sourcegraph-frontend-1:
-    cpus: 12
-    mem_limit: '24g'
-  sourcegraph-frontend-internal:
-    cpus: 12
-    mem_limit: '24g'
+  sourcegraph-frontend-1: *frontend
+  sourcegraph-frontend-2: *frontend
+  sourcegraph-frontend-3: *frontend
+  sourcegraph-frontend-internal: *frontend
+
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
-      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080'
+      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080 sourcegraph-frontend-2:3080 sourcegraph-frontend-3:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
       # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
       - 'SRC_SITE_ADDRESS=ec2-34-221-201-222.us-west-2.compute.amazonaws.com'
