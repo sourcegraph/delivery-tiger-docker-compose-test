@@ -3,13 +3,13 @@ services:
   redis-cache:
     cpus: 1
     mem_limit: '7g'
-    
+
   redis-store:
     cpus: 1
     mem_limit: '1g'
 
   zoekt-indexserver-0: &indexserver
-    cpus: 8
+    cpus: 16
     mem_limit: '24g'
   zoekt-indexserver-1: *indexserver
   zoekt-indexserver-2: *indexserver
@@ -22,7 +22,7 @@ services:
   zoekt-indexserver-9: *indexserver
 
   zoekt-webserver-0: &webserver
-    cpus: 8
+    cpus: 16
     mem_limit: '32g'
   zoekt-webserver-1: *webserver
   zoekt-webserver-2: *webserver
@@ -35,21 +35,21 @@ services:
   zoekt-webserver-9: *webserver  
 
   gitserver-0: &gitserver
-    cpus: 16
+    cpus: 24
     mem_limit: '32g'
   gitserver-1: *gitserver
   gitserver-2: *gitserver
   gitserver-3: *gitserver
 
   searcher-0: &searcher
-    cpus: 16
+    cpus: 24
     mem_limit: '16g'
   searcher-1: *searcher
   searcher-2: *searcher
 
   symbols-0: &symbols
-    cpus: 4
-    mem_limit: '12g'
+    cpus: 12
+    mem_limit: '24g'
     environment:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
@@ -61,8 +61,8 @@ services:
 
 
   sourcegraph-frontend-0: &frontend
-    cpus: 12
-    mem_limit: '24g'
+    cpus: 24
+    mem_limit: '48g'
   sourcegraph-frontend-1: *frontend
   sourcegraph-frontend-2: *frontend
   sourcegraph-frontend-3: *frontend
