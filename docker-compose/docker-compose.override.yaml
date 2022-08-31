@@ -8,74 +8,74 @@ services:
     mem_limit: '1g'
   zoekt-indexserver-0:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-indexserver-1:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-indexserver-2:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-indexserver-3:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-indexserver-4:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-indexserver-5:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-indexserver-6:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-indexserver-7:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '32g'
   zoekt-webserver-0:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '36g'
   zoekt-webserver-1:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '36g'
   zoekt-webserver-2:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '36g'
   zoekt-webserver-3:
     cpus: 8
-    mem_limit: '35g'    
+    mem_limit: '36g'    
   zoekt-webserver-4:
     cpus: 8
-    mem_limit: '35g'  
+    mem_limit: '36g'  
   zoekt-webserver-5:
     cpus: 8
-    mem_limit: '35g'
+    mem_limit: '36g'
   zoekt-webserver-6:
     cpus: 8
-    mem_limit: '35g'  
+    mem_limit: '36g'  
   zoekt-webserver-7:
     cpus: 8
-    mem_limit: '35g'  
+    mem_limit: '36g'  
   gitserver-0:
-    cpus: 8
-    mem_limit: '20g'
+    cpus: 12
+    mem_limit: '32g'
   gitserver-1:
-    cpus: 8
-    mem_limit: '20g'
+    cpus: 12
+    mem_limit: '32g'
   gitserver-2:
-    cpus: 8
-    mem_limit: '20g'
+    cpus: 12
+    mem_limit: '32g'
   gitserver-3:
-    cpus: 8
-    mem_limit: '20g'
+    cpus: 12
+    mem_limit: '32g'
 
   searcher-0:
     cpus: 12
-    mem_limit: '15g'
+    mem_limit: '16g'
   searcher-1:
     cpus: 12
-    mem_limit: '15g'
+    mem_limit: '16g'
   searcher-2:
     cpus: 12
-    mem_limit: '15g'
+    mem_limit: '16g'
 
   symbols-0:
     cpus: 4
