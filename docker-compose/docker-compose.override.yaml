@@ -67,16 +67,16 @@ services:
     cpus: 8
     mem_limit: '24g'  
   gitserver-0:
-    cpus: 12
+    cpus: 20
     mem_limit: '32g'
   gitserver-1:
-    cpus: 12
+    cpus: 20
     mem_limit: '32g'
   gitserver-2:
-    cpus: 12
+    cpus: 20
     mem_limit: '32g'
   gitserver-3:
-    cpus: 12
+    cpus: 20
     mem_limit: '32g'
 
   searcher-0:
@@ -108,14 +108,14 @@ services:
   minio:
     cpus: 0.5
   sourcegraph-frontend-0:
-    cpus: 8
+    cpus: 12
     mem_limit: '24g'
   sourcegraph-frontend-1:
-    cpus: 8
+    cpus: 12
     mem_limit: '24g'
   sourcegraph-frontend-internal:
-    cpus: 8
-    mem_limit: '8g'
+    cpus: 12
+    mem_limit: '24g'
   caddy:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
