@@ -137,7 +137,7 @@ services:
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070 zoekt-webserver-6:6070 zoekt-webserver-7:6070'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070 zoekt-webserver-6:6070 zoekt-webserver-7:6070 zoekt-webserver-8:6070 zoekt-webserver-9:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'GRAFANA_SERVER_URL=http://grafana:3370'
@@ -183,7 +183,7 @@ services:
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070 zoekt-webserver-6:6070 zoekt-webserver-7:6070'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070 zoekt-webserver-6:6070 zoekt-webserver-7:6070 zoekt-webserver-8:6070 zoekt-webserver-9:6070'
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'GRAFANA_SERVER_URL=http://grafana:3000'
@@ -334,7 +334,24 @@ services:
     volumes:
       - 'zoekt-7-shared:/data/index'
     hostname: zoekt-indexserver-7
-
+  zoekt-indexserver-8:
+    <<: *indexserver
+    container_name: zoekt-indexserver-8
+    environment:
+      - 'HOSTNAME=zoekt-webserver-8:6070'
+      - 'SRC_FRONTEND_INTERNAL=http://sourcegraph-frontend-internal:3090'
+    volumes:
+      - 'zoekt-8-shared:/data/index'
+    hostname: zoekt-indexserver-8
+  zoekt-indexserver-9:
+    <<: *indexserver
+    container_name: zoekt-indexserver-9
+    environment:
+      - 'HOSTNAME=zoekt-webserver-9:6070'
+      - 'SRC_FRONTEND_INTERNAL=http://sourcegraph-frontend-internal:3090'
+    volumes:
+      - 'zoekt-9-shared:/data/index'
+    hostname: zoekt-indexserver-9
   # Description: Backend for indexed text search operations.
   #
   # Disk: 200GB / persistent SSD
@@ -415,6 +432,22 @@ services:
     volumes:
       - 'zoekt-7-shared:/data/index'
     hostname: zoekt-webserver-7
+  zoekt-webserver-8:
+    <<: *webserver
+    container_name: zoekt-webserver-8
+    environment:
+      - 'HOSTNAME=zoekt-webserver-8:6070'
+    volumes:
+      - 'zoekt-8-shared:/data/index'
+    hostname: zoekt-webserver-8
+  zoekt-webserver-9:
+    <<: *webserver
+    container_name: zoekt-webserver-9
+    environment:
+      - 'HOSTNAME=zoekt-webserver-9:6070'
+    volumes:
+      - 'zoekt-9-shared:/data/index'
+    hostname: zoekt-webserver-9
   # Description: Backend for text search operations.
   #
   # Disk: 128GB / non-persistent SSD
@@ -530,7 +563,7 @@ services:
       - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070 zoekt-webserver-6:6070 zoekt-webserver-7:6070'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070 zoekt-webserver-6:6070 zoekt-webserver-7:6070 zoekt-webserver-8:6070 zoekt-webserver-9:6070'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
     volumes:
       - 'worker:/mnt/cache'
@@ -938,5 +971,7 @@ volumes:
   zoekt-5-shared:
   zoekt-6-shared:
   zoekt-7-shared:
+  zoekt-8-shared:
+  zoekt-9-shared:
 networks:
   sourcegraph:
