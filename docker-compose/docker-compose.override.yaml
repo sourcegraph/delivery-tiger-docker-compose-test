@@ -57,12 +57,12 @@ services:
   symbols-1: *symbols
 
   pgsql:
-    cpus: 16
+    cpus: 32
     mem_limit: '32g'
 
 
   sourcegraph-frontend-0: &frontend
-    cpus: 8
+    cpus: 6
     mem_limit: '8g'
   sourcegraph-frontend-1: *frontend
   sourcegraph-frontend-2: *frontend
