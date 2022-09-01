@@ -62,7 +62,7 @@ services:
 
 
   sourcegraph-frontend-0: &frontend
-    cpus: 12
+    cpus: 8
     mem_limit: '12g'
   sourcegraph-frontend-1: *frontend
   sourcegraph-frontend-2: *frontend
@@ -79,7 +79,7 @@ services:
     environment:
       - 'XDG_DATA_HOME=/caddy-storage/data'
       - 'XDG_CONFIG_HOME=/caddy-storage/config'
-      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080 sourcegraph-frontend-2:3080 sourcegraph-frontend-3:3080 sourcegraph-frontend-4:3080 sourcegraph-frontend-5:3080'
+      - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080 sourcegraph-frontend-2:3080 sourcegraph-frontend-3:3080 sourcegraph-frontend-4:3080 sourcegraph-frontend-5:3080 sourcegraph-frontend-6:30800 sourcegraph-frontend-7:30800 sourcegraph-frontend-8:30800 sourcegraph-frontend-9:30800'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
       # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
       - 'SRC_SITE_ADDRESS=ec2-34-221-201-222.us-west-2.compute.amazonaws.com'
