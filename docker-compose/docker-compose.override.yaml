@@ -63,7 +63,7 @@ services:
 
   sourcegraph-frontend-0: &frontend
     cpus: 8
-    mem_limit: '12g'
+    mem_limit: '8g'
   sourcegraph-frontend-1: *frontend
   sourcegraph-frontend-2: *frontend
   sourcegraph-frontend-3: *frontend
