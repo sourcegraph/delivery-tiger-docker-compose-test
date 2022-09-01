@@ -51,6 +51,10 @@
     - sourcegraph-frontend-3:6060
     - sourcegraph-frontend-4:6060
     - sourcegraph-frontend-5:6060
+    - sourcegraph-frontend-6:6060
+    - sourcegraph-frontend-7:6060
+    - sourcegraph-frontend-8:6060
+    - sourcegraph-frontend-9:6060
 - labels:
     job: gitserver
   targets:
@@ -58,6 +62,7 @@
     - gitserver-1:6060
     - gitserver-2:6060
     - gitserver-3:6060
+    - gitserver-4:6060
 - labels:
     job: searcher
   targets:

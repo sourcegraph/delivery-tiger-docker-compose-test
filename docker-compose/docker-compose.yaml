@@ -133,7 +133,7 @@ services:
       - PGHOST=pgsql
       - CODEINTEL_PGHOST=codeintel-db
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
-      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
+      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178 gitserver-4:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
@@ -182,7 +182,27 @@ services:
     <<: *frontend
     container_name: sourcegraph-frontend-5
     volumes:
-      - 'sourcegraph-frontend-5:/mnt/cache'      
+      - 'sourcegraph-frontend-5:/mnt/cache'     
+  sourcegraph-frontend-6:
+    <<: *frontend
+    container_name: sourcegraph-frontend-6
+    volumes:
+      - 'sourcegraph-frontend-6:/mnt/cache'  
+  sourcegraph-frontend-7:
+    <<: *frontend
+    container_name: sourcegraph-frontend-7
+    volumes:
+      - 'sourcegraph-frontend-7:/mnt/cache'  
+  sourcegraph-frontend-8:
+    <<: *frontend
+    container_name: sourcegraph-frontend-8
+    volumes:
+      - 'sourcegraph-frontend-8:/mnt/cache'  
+  sourcegraph-frontend-9:
+    <<: *frontend
+    container_name: sourcegraph-frontend-9
+    volumes:
+      - 'sourcegraph-frontend-9:/mnt/cache' 
   # Description: Serves the internal Sourcegraph frontend API.
   #
   # Disk: 128GB / non-persistent SSD
@@ -199,7 +219,7 @@ services:
       - PGHOST=pgsql
       - CODEINTEL_PGHOST=codeintel-db
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
-      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
+      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178 gitserver-4:3178'
       - 'SRC_SYNTECT_SERVER=http://syntect-server:9238'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
@@ -268,7 +288,12 @@ services:
     volumes:
       - 'gitserver-3:/data/repos'
     hostname: gitserver-3
-
+  gitserver-4:
+    <<: *gitserver
+    container_name: gitserver-4
+    volumes:
+      - 'gitserver-4:/data/repos'
+    hostname: gitserver-4
   # Description: Backend for indexed text search operations.
   #
   # Disk: 200GB / persistent SSD
@@ -580,7 +605,7 @@ services:
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - JAEGER_AGENT_HOST=jaeger
-      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
+      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178 gitserver-4:3178'
       - 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181 http://searcher-2:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184 http://symbols-1:3184'
       - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070 zoekt-webserver-5:6070 zoekt-webserver-6:6070 zoekt-webserver-7:6070 zoekt-webserver-8:6070 zoekt-webserver-9:6070'
@@ -965,6 +990,7 @@ volumes:
   gitserver-1:
   gitserver-2:
   gitserver-3:
+  gitserver-4:
   grafana:
   pgsql:
   codeintel-db:
@@ -984,6 +1010,10 @@ volumes:
   sourcegraph-frontend-3:
   sourcegraph-frontend-4:
   sourcegraph-frontend-5:
+  sourcegraph-frontend-6:
+  sourcegraph-frontend-7:
+  sourcegraph-frontend-8:
+  sourcegraph-frontend-9:
   sourcegraph-frontend-internal-0:
   symbols-0:
   symbols-1:
