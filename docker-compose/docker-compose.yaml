@@ -128,7 +128,6 @@ services:
     cpus: 4
     mem_limit: '8g'
     environment:
-      - SRC_PGSQL_MAX_OPEN=100
       - DEPLOY_TYPE=docker-compose
       - JAEGER_AGENT_HOST=jaeger
       - PGHOST=pgsql
@@ -216,7 +215,6 @@ services:
     cpus: 4
     mem_limit: '8g'
     environment:
-      - SRC_PGSQL_MAX_OPEN=100
       - DEPLOY_TYPE=docker-compose
       - PGHOST=pgsql
       - CODEINTEL_PGHOST=codeintel-db
