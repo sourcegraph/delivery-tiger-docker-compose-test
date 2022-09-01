@@ -76,10 +76,10 @@ services:
       - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
       # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
-      - 'SRC_SITE_ADDRESS=ec2-54-188-66-76.us-west-2.compute.amazonaws.com'
+      # - 'SRC_SITE_ADDRESS=ec2-54-188-66-76.us-west-2.compute.amazonaws.com'
       #
       # Uncomment & update the following line when using HTTPS with Let's Encrypt
-      - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
+      # - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
     volumes:
       - 'caddy:/caddy-storage'
       #
