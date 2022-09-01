@@ -49,6 +49,8 @@
     - sourcegraph-frontend-1:6060
     - sourcegraph-frontend-2:6060
     - sourcegraph-frontend-3:6060
+    - sourcegraph-frontend-4:6060
+    - sourcegraph-frontend-5:6060
 - labels:
     job: gitserver
   targets:
