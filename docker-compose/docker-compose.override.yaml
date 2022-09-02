@@ -9,7 +9,7 @@ services:
     mem_limit: '1g'
 
   zoekt-indexserver-0: &indexserver
-    cpus: 16
+    cpus: 8
     mem_limit: '16g'
   zoekt-indexserver-1: *indexserver
   zoekt-indexserver-2: *indexserver
@@ -23,7 +23,7 @@ services:
 
   zoekt-webserver-0: &webserver
     cpus: 16
-    mem_limit: '26g'
+    mem_limit: '32g'
   zoekt-webserver-1: *webserver
   zoekt-webserver-2: *webserver
   zoekt-webserver-3: *webserver    
@@ -36,7 +36,7 @@ services:
 
   gitserver-0: &gitserver
     cpus: 18
-    mem_limit: '36g'
+    mem_limit: '50g'
   gitserver-1: *gitserver
   gitserver-2: *gitserver
   gitserver-3: *gitserver
@@ -63,7 +63,7 @@ services:
 
   sourcegraph-frontend-0: &frontend
     cpus: 12
-    mem_limit: '8g'
+    mem_limit: '24g'
   sourcegraph-frontend-1: *frontend
   sourcegraph-frontend-2: *frontend
   sourcegraph-frontend-3: *frontend
