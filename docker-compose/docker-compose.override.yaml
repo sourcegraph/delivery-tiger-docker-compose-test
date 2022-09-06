@@ -6,38 +6,40 @@ services:
   redis-store:
     cpus: 1
     mem_limit: '1g'
-  zoekt-indexserver-0:
+
+  zoekt-indexserver-0: &indexserver
     cpus: 4
     mem_limit: '16g'
-  zoekt-webserver-0:
+
+  zoekt-webserver-0: &webserver
     cpus: 8
     mem_limit: '16g'
+
   zoekt-indexserver-1:
     extends:
       file: docker-compose.yaml
       service: zoekt-indexserver-0
-    cpus: 4
-    mem_limit: '16g'
+    <<: *indexserver
+    container_name: zoekt-indexserver-1
     environment:
       - 'HOSTNAME=zoekt-webserver-1:6070'
     volumes:
       - 'zoekt-1-shared:/data/index'
     hostname: zoekt-indexserver-1
+
   zoekt-webserver-1:
     extends:
       file: docker-compose.yaml
       service: zoekt-webserver-0
-    cpus: 8
-    mem_limit: '16g'
+    <<: *webserver
+    container_name: zoekt-webserver-1
     environment:
       - 'HOSTNAME=zoekt-webserver-1:6070'
     volumes:
       - 'zoekt-1-shared:/data/index'
-    networks:
-      - sourcegraph
     hostname: zoekt-webserver-1
 
-  gitserver-0:
+  gitserver-0: &gitserver
     cpus: 8
     mem_limit: '25g'
 
@@ -45,18 +47,22 @@ services:
     extends:
       file: docker-compose.yaml
       service: gitserver-0
-    cpus: 8
-    mem_limit: '25g'
+    <<: *gitserver
+    container_name: gitserver-1
+    volumes:
+      - 'gitserver-1:/data/repos'
+    hostname: gitserver-1
 
-  searcher-0:
+  searcher-0: &searcher
     cpus: 4
     mem_limit: '6g'
+    
   searcher-1:
+    <<: *searcher
+    container_name: searcher-1
     extends:
       file: docker-compose.yaml
       service: searcher-0
-    cpus: 4
-    mem_limit: '6g'
     volumes:
       - 'searcher-1:/mnt/cache'
 
@@ -66,28 +72,37 @@ services:
     environment:
       - USE_ROCKSKIP=true
       - ROCKSKIP_MIN_REPO_SIZE_MB=1000
+
   pgsql:
     cpus: 4
     mem_limit: '6g'
-  sourcegraph-frontend-0:
+    
+  codeintel-db:
+    profiles:
+      - disabled
+    
+  sourcegraph-frontend-0: &frontend
     cpus: 6
     mem_limit: '6g'
-    environment: &env_frontend
+    environment:
+      - 'CODEINTEL_PGHOST=psql2.mycompany.org'
+      - 'CODEINTEL_PGUSER=sourcegraph'
+      - 'CODEINTEL_PGPASSWORD=secret'
+      - 'CODEINTEL_PGDATABASE=sourcegraph-codeintel'
+      - 'CODEINTEL_PGSSLMODE=require'
       - &env_gitserver 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178'
       - &env_searcher 'SEARCHER_URL=http://searcher-0:3181 http://searcher-1:3181'
       - &env_zoekt 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070'
+  
   sourcegraph-frontend-1:
+    <<: *frontend
+    container_name: sourcegraph-frontend-1
     extends:
       file: docker-compose.yaml
       service: sourcegraph-frontend-0
-    cpus: 6
-    mem_limit: '6g'
-    environment: *env_frontend
 
   sourcegraph-frontend-internal:
-    cpus: 6
-    mem_limit: '6g'
-    environment: *env_frontend
+    <<: *frontend
 
   worker:
     environment:
