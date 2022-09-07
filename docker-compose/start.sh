@@ -73,4 +73,4 @@ curl -L "https://raw.githubusercontent.com/docker/compose/${DOCKER_COMPOSE_VERSI
 
 # Run Sourcegraph. Restart the containers upon reboot.
 cd "${DEPLOY_SOURCEGRAPH_DOCKER_CHECKOUT}"/docker-compose
-docker-compose up -d
+docker-compose up -d --remove-orphans

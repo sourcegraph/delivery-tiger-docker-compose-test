@@ -7,10 +7,10 @@ services:
     cpus: 1
     mem_limit: '1g'
   zoekt-indexserver-0:
-    cpus: 4
+    cpus: 2
     mem_limit: '20g'
   zoekt-webserver-0:
-    cpus: 6
+    cpus: 2
     mem_limit: '20g'
   gitserver-0:
-    cpus: 4
+    cpus: 2
