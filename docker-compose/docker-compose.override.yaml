@@ -82,10 +82,10 @@ services:
       - 'SRC_FRONTEND_ADDRESSES=sourcegraph-frontend-0:3080 sourcegraph-frontend-1:3080 sourcegraph-frontend-2:3080 sourcegraph-frontend-3:3080 sourcegraph-frontend-4:3080 sourcegraph-frontend-5:3080 sourcegraph-frontend-6:3080 sourcegraph-frontend-7:3080 sourcegraph-frontend-8:3080 sourcegraph-frontend-9:3080'
       # Uncomment & update this line when using Let's Encrypt or custom HTTPS certificates:
       # - 'SRC_SITE_ADDRESS=ec2-52-35-104-18.us-west-2.compute.amazonaws.com'
-      - 'SRC_SITE_ADDRESS=ec2-34-221-201-222.us-west-2.compute.amazonaws.com'
+      # - 'SRC_SITE_ADDRESS=ec2-34-221-201-222.us-west-2.compute.amazonaws.com'
       #
       # Uncomment & update the following line when using HTTPS with Let's Encrypt
-      - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
+      # - 'SRC_ACME_EMAIL=beatrix@sourcegraph.com'
     volumes:
       - 'caddy:/caddy-storage'
       #
@@ -93,11 +93,11 @@ services:
       # the configuration files below must be updated to include trusted_proxies
       #
       # Comment out the following line when using HTTPS with either Let's Encrypt or custom certificates
-      # - '../caddy/builtins/http.Caddyfile:/etc/caddy/Caddyfile'
+      - '../caddy/builtins/http.Caddyfile:/etc/caddy/Caddyfile'
       #
       # Uncomment the following line when using HTTPS with Let's Encrypt's staging environment
       # - '../caddy/builtins/https.lets-encrypt-staging.Caddyfile:/etc/caddy/Caddyfile'
       #
       # Uncomment the following line when using HTTPS with Let's Encrypt's production environment
       # IMPORTANT: Strongly recommended to test with the staging configuration above first, see that file for details.
-      - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
+      # - '../caddy/builtins/https.lets-encrypt-prod.Caddyfile:/etc/caddy/Caddyfile'
