@@ -5,7 +5,7 @@ set -euxo pipefail
 # ACTION REQUIRED: REPLACE THE URL AND REVISION WITH YOUR DEPLOYMENT REPO INFO
 ###############################################################################
 DEPLOY_SOURCEGRAPH_DOCKER_FORK_CLONE_URL='https://github.com/sourcegraph/delivery-tiger-docker-compose-test.git'
-DEPLOY_SOURCEGRAPH_DOCKER_FORK_REVISION='s'
+DEPLOY_SOURCEGRAPH_DOCKER_FORK_REVISION='m'
 ##################### NO CHANGES REQUIRED BELOW THIS LINE #####################
 DEPLOY_SOURCEGRAPH_DOCKER_CHECKOUT='/home/ec2-user/deploy-sourcegraph-docker'
 DOCKER_COMPOSE_VERSION='1.29.2'
