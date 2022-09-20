@@ -33,10 +33,12 @@
     job: zoekt-indexserver
   targets:
     - zoekt-indexserver-0:6072
+    - zoekt-indexserver-1:6072
 - labels:
     job: sourcegraph-frontend
   targets:
     - sourcegraph-frontend-0:6060
+    - sourcegraph-frontend-1:6060
 - labels:
     job: gitserver
   targets:
