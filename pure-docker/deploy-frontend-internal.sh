@@ -36,10 +36,9 @@ docker run --detach \
     -e SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090 \
     -e REPO_UPDATER_URL=http://repo-updater:3182 \
     -e GRAFANA_SERVER_URL=http://grafana:3000 \
-    -e JAEGER_SERVER_URL=http://jaeger:16686 \
     -e GITHUB_BASE_URL=http://github-proxy:3180 \
     -e PROMETHEUS_URL=http://prometheus:9090 \
     -v $VOLUME:/mnt/cache \
-    index.docker.io/sourcegraph/frontend:3.43.0@sha256:f81f3ecf078908edcdfdc755772bac210e4bf54a014a7e1239e483c6b9674f94
+    index.docker.io/sourcegraph/frontend:4.0.0@sha256:2bb90bd8f0be48e21578144917b088d0bb5ba478003a42e88e8087488eee63f4
 
 echo "Deployed sourcegraph-frontend-internal service"

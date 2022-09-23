@@ -13,7 +13,7 @@ services:
   # for this container will need to be updated to reflect the new connection information.
   migrator:
     container_name: migrator
-    image: 'index.docker.io/sourcegraph/migrator:3.43.0@sha256:d61df586e051294252b9a67ed98843ea1428a351952f84eab93585fdae296227'
+    image: 'index.docker.io/sourcegraph/migrator:4.0.0@sha256:d09d03f5a046629dc57d66b3d764a10f6b709e110c694d6d0f8afeda622b5191'
     cpus: 0.5
     mem_limit: '500m'
     command: ['up']
@@ -41,7 +41,7 @@ services:
       - CODEINSIGHTS_PGPASSWORD=password
       - CODEINSIGHTS_PGDATABASE=postgres
       - CODEINSIGHTS_PGSSLMODE=disable
-    restart: "on-failure"
+    restart: 'on-failure'
     networks:
       - sourcegraph
     depends_on:
@@ -86,7 +86,7 @@ services:
       #
       # IMPORTANT: if a customer uses a reverse proxy in front of Caddy
       # the configuration files below must be updated to include trusted_proxies
-      # 
+      #
       # Comment out the following line when using HTTPS with either Let's Encrypt or custom certificates
       - '../caddy/builtins/http.Caddyfile:/etc/caddy/Caddyfile'
       #
@@ -124,12 +124,12 @@ services:
   # service.
   sourcegraph-frontend-0: &frontend
     container_name: sourcegraph-frontend-0
-    image: 'index.docker.io/sourcegraph/frontend:3.43.0@sha256:f81f3ecf078908edcdfdc755772bac210e4bf54a014a7e1239e483c6b9674f94'
+    image: 'index.docker.io/sourcegraph/frontend:4.0.0@sha256:2bb90bd8f0be48e21578144917b088d0bb5ba478003a42e88e8087488eee63f4'
     cpus: 4
     mem_limit: '8g'
     environment:
       - DEPLOY_TYPE=docker-compose
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
       - PGHOST=pgsql
       - CODEINTEL_PGHOST=codeintel-db
       - CODEINSIGHTS_PGDATASOURCE=postgres://postgres:password@codeinsights-db:5432/postgres
@@ -141,7 +141,6 @@ services:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'GRAFANA_SERVER_URL=http://grafana:3370'
-      - 'JAEGER_SERVER_URL=http://jaeger:16686'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
       - 'PROMETHEUS_URL=http://prometheus:9090'
     healthcheck:
@@ -171,7 +170,7 @@ services:
   #
   sourcegraph-frontend-internal:
     container_name: sourcegraph-frontend-internal
-    image: 'index.docker.io/sourcegraph/frontend:3.43.0@sha256:f81f3ecf078908edcdfdc755772bac210e4bf54a014a7e1239e483c6b9674f94'
+    image: 'index.docker.io/sourcegraph/frontend:4.0.0@sha256:2bb90bd8f0be48e21578144917b088d0bb5ba478003a42e88e8087488eee63f4'
     cpus: 4
     mem_limit: '8g'
     environment:
@@ -187,10 +186,9 @@ services:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
       - 'REPO_UPDATER_URL=http://repo-updater:3182'
       - 'GRAFANA_SERVER_URL=http://grafana:3000'
-      - 'JAEGER_SERVER_URL=http://jaeger:16686'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
       - 'PROMETHEUS_URL=http://prometheus:9090'
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
     volumes:
       - 'sourcegraph-frontend-internal-0:/mnt/cache'
     networks:
@@ -218,12 +216,13 @@ services:
   #
   gitserver-0: &gitserver
     container_name: gitserver-0
-    image: 'index.docker.io/sourcegraph/gitserver:3.43.0@sha256:b3192b3fdc59fccc80c9d3e6bb2be38c0ca1474281fce09e89f664d07aa8f2ae'
+    image: 'index.docker.io/sourcegraph/gitserver:4.0.0@sha256:f35ae3373018235ce2982122b6a7fed4c17f5fa6e1231c5480b67a8d63bc42b6'
     cpus: 4
     mem_limit: '8g'
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
+      - 'GITHUB_BASE_URL=http://github-proxy:3180'
     volumes:
       - 'gitserver-0:/data/repos'
     networks:
@@ -247,12 +246,14 @@ services:
   #
   zoekt-indexserver-0: &indexserver
     container_name: zoekt-indexserver-0
-    image: 'index.docker.io/sourcegraph/search-indexer:3.43.0@sha256:803d2b18acb564810edfab44517b0b210d301e2989a8f55839f9a4636e873d76'
+    image: 'index.docker.io/sourcegraph/search-indexer:4.0.0@sha256:a39b880b28eac8f626b808cdadddfe57bf3e422f59ab8c6bba06344e100a8d99'
     cpus: 8
     mem_limit: '16g'
     environment:
       - 'HOSTNAME=zoekt-webserver-0:6070'
       - 'SRC_FRONTEND_INTERNAL=http://sourcegraph-frontend-internal:3090'
+      - 'OPENTELEMETRY_DISABLED=false'
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
     volumes:
       - 'zoekt-0-shared:/data/index'
     networks:
@@ -286,11 +287,13 @@ services:
   #
   zoekt-webserver-0: &webserver
     container_name: zoekt-webserver-0
-    image: 'index.docker.io/sourcegraph/indexed-searcher:3.43.0@sha256:9a94438fb636e8c97cbb5ec8abefda0d39a30dad3dfa9f1ce7a2d113ef88d139'
+    image: 'index.docker.io/sourcegraph/indexed-searcher:4.0.0@sha256:e390f54c2662889a5d38a9069ee50b8ca4bb937bbfdb06c4bf30dce49d3e71d1'
     cpus: 8
     mem_limit: '50g'
     environment:
       - 'HOSTNAME=zoekt-webserver-0:6070'
+      - 'OPENTELEMETRY_DISABLED=false'
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
     healthcheck:
       test: "wget -q 'http://127.0.0.1:6070/healthz' -O /dev/null || exit 1"
       interval: 5s
@@ -328,12 +331,12 @@ services:
   #
   searcher-0: &searcher
     container_name: searcher-0
-    image: 'index.docker.io/sourcegraph/searcher:3.43.0@sha256:bbfdf8e8fcc29ae50033d1e8d68d29cd2925e33bd52670dd4b920e27ae9e2090'
+    image: 'index.docker.io/sourcegraph/searcher:4.0.0@sha256:7aa7f6cc8800c173e92ee181a51708e43abc2b3e29f3631dcc18fa1d69e8dcb3'
     cpus: 2
     mem_limit: '2g'
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
     healthcheck:
       test: "wget -q 'http://127.0.0.1:3181/healthz' -O /dev/null || exit 1"
       interval: 5s
@@ -355,12 +358,12 @@ services:
   #
   github-proxy:
     container_name: github-proxy
-    image: 'index.docker.io/sourcegraph/github-proxy:3.43.0@sha256:9ff040ddb1aebed1fcecfc257bfd5b1a4466f30db4986e7702c3075e6d910946'
+    image: 'index.docker.io/sourcegraph/github-proxy:4.0.0@sha256:f522aeefe2e13e7592ddbd82c35d1c4e45e024afb9e9433af0fa44c770b3aec6'
     cpus: 1
     mem_limit: '1g'
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
     networks:
       - sourcegraph
     restart: always
@@ -372,12 +375,12 @@ services:
   #
   precise-code-intel-worker:
     container_name: precise-code-intel-worker
-    image: 'index.docker.io/sourcegraph/precise-code-intel-worker:3.43.0@sha256:39c2ca49ff9f33dffb00b8a66aa2a3105a5039a278a7c9d8d45e2e18c5cabcd0'
+    image: 'index.docker.io/sourcegraph/precise-code-intel-worker:4.0.0@sha256:5cd057f3b54c82c8a99e4cedc7a26760702d9d41cf5aa10d1fec7b135f9ba042'
     cpus: 2
     mem_limit: '4g'
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
     healthcheck:
       test: "wget -q 'http://127.0.0.1:3188/healthz' -O /dev/null || exit 1"
       interval: 5s
@@ -396,12 +399,12 @@ services:
   #
   repo-updater:
     container_name: repo-updater
-    image: 'index.docker.io/sourcegraph/repo-updater:3.43.0@sha256:839f7a16790698c7b408a2ae05389022833843cc41072800b43cba00c7a49c9d'
+    image: 'index.docker.io/sourcegraph/repo-updater:4.0.0@sha256:b4d339e97d97abe4f23d5875d9257dcd2db357b2826216c4a8c86513e79729ff'
     cpus: 4
     mem_limit: '4g'
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
     volumes:
       - 'repo-updater:/mnt/cache'
@@ -417,16 +420,16 @@ services:
   #
   worker:
     container_name: worker
-    image: 'index.docker.io/sourcegraph/worker:3.43.0@sha256:2e1cebd243feebb49026e7ae1572b2db4694cc419f98d6932a097a85a7211940'
+    image: 'index.docker.io/sourcegraph/worker:4.0.0@sha256:c50482e3a708ac1a73b7e973b1d1f4ca1971f1ca0470e138bc56ba19d7a85f6f'
     cpus: 4
     mem_limit: '4g'
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
-      - 'SRC_GIT_SERVERS=gitserver-0:3178 gitserver-1:3178 gitserver-2:3178 gitserver-3:3178'
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
+      - 'SRC_GIT_SERVERS=gitserver-0:3178'
       - 'SEARCHER_URL=http://searcher-0:3181'
       - 'SYMBOLS_URL=http://symbols-0:3184'
-      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070 zoekt-webserver-3:6070 zoekt-webserver-4:6070'
+      - 'INDEXED_SEARCH_SERVERS=zoekt-webserver-0:6070 zoekt-webserver-1:6070 zoekt-webserver-2:6070'
       - 'GITHUB_BASE_URL=http://github-proxy:3180'
     volumes:
       - 'worker:/mnt/cache'
@@ -442,7 +445,7 @@ services:
   #
   syntect-server:
     container_name: syntect-server
-    image: 'index.docker.io/sourcegraph/syntax-highlighter:3.43.0@sha256:33fc9a925245493069306b5ea924c16091a344f03bad88525945866d74acb508'
+    image: 'index.docker.io/sourcegraph/syntax-highlighter:4.0.0@sha256:83486825d9bc125b574638c57b3a793879607e14b697cbe8721f720a60725fc7'
     cpus: 4
     mem_limit: '6g'
     healthcheck:
@@ -463,12 +466,12 @@ services:
   #
   symbols-0:
     container_name: symbols-0
-    image: 'index.docker.io/sourcegraph/symbols:3.43.0@sha256:b242e3cfa5cd4cc9145ba6b6cd1aefeec1f4b54ff0791041107e29043812c559'
+    image: 'index.docker.io/sourcegraph/symbols:4.0.0@sha256:9bdb78de11025ba0186e8212dc87ccf748e344a9a1a7e398b24216b6c069f879'
     cpus: 2
     mem_limit: '4g'
     environment:
       - 'SRC_FRONTEND_INTERNAL=sourcegraph-frontend-internal:3090'
-      - JAEGER_AGENT_HOST=jaeger
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317'
     healthcheck:
       test: "wget -q 'http://127.0.0.1:3184/healthz' -O /dev/null || exit 1"
       interval: 5s
@@ -489,7 +492,7 @@ services:
   #
   prometheus:
     container_name: prometheus
-    image: 'index.docker.io/sourcegraph/prometheus:3.43.0@sha256:5e8bdb135a6bc13238ec73b5d0af92b5eea1efeb49b8b1a72e3c208c6cc351d4'
+    image: 'index.docker.io/sourcegraph/prometheus:4.0.0@sha256:0e6b30c4fc5a7ab4466d3d81e2547e1845a6bbb1069abf0d9341b999b4912df0'
     cpus: 4
     mem_limit: '8g'
     volumes:
@@ -516,7 +519,7 @@ services:
   # 'GF_SERVER_ROOT_URL='https://grafana.example.com'
   grafana:
     container_name: grafana
-    image: 'index.docker.io/sourcegraph/grafana:3.43.0@sha256:5510222f06238fb110900f44f0bb92f2d0fd9d02b1191e11bc132ee644ce9c75'
+    image: 'index.docker.io/sourcegraph/grafana:4.0.0@sha256:f8e485d4f4fe2f85d9bca5c331968e5d05407941923754ddeb4d9ce84c708e90'
     cpus: 1
     mem_limit: '1g'
     volumes:
@@ -537,7 +540,7 @@ services:
   #
   cadvisor:
     container_name: cadvisor
-    image: 'index.docker.io/sourcegraph/cadvisor:3.43.0@sha256:91aed2aa386adf0ec6042f1c48c25bd1daff6e8b90ca155448eeeb6270b6dc05'
+    image: 'index.docker.io/sourcegraph/cadvisor:4.0.0@sha256:582905d5f6bcddfbd96c0d83da70000307ce8231316704a962fc5ee29a7047af'
     cpus: 1
     mem_limit: '1g'
     # You may set `privileged` to `false and `cadvisor` will run with reduced privileges.
@@ -562,35 +565,6 @@ services:
     command:
       - --port=8080
 
-  # Description: Jaeger all-in-one instance
-  # (https://www.jaegertracing.io/docs/1.17/getting-started/#all-in-one) for distributed tracing.
-  #
-  # Disk: none
-  # Ports exposed to other Sourcegraph services: 5778/TCP 6831/UDP 6832/UDP 14250/TCP
-  # Ports exposed to the public internet: none
-  # Ports exposed to site admins only: 16686/HTTP
-  #
-  jaeger:
-    container_name: jaeger
-    image: 'index.docker.io/sourcegraph/jaeger-all-in-one:3.43.0@sha256:033ac2be811a15f8acb5098d59f0a53b14e47f2ed5a640ea3c58fbd9a888a6c3'
-    cpus: 0.5
-    mem_limit: '512m'
-    ports:
-      # Query port
-      - '0.0.0.0:16686:16686'
-      # Collector port
-      - '0.0.0.0:14250:14250'
-      # Agent ports
-      - '0.0.0.0:5778:5778'
-      - '0.0.0.0:6831:6831'
-      - '0.0.0.0:6832:6832'
-    networks:
-      - sourcegraph
-    restart: always
-    command: ['--memory.max-traces=20000']
-    environment:
-      - 'SAMPLING_STRATEGIES_FILE=/etc/jaeger/sampling_strategies.json'
-
   # Description: PostgreSQL database for various data.
   #
   # Disk: 128GB / persistent SSD
@@ -599,7 +573,7 @@ services:
   #
   pgsql:
     container_name: pgsql
-    image: 'index.docker.io/sourcegraph/postgres-12-alpine:3.43.0@sha256:10586005197bf1f71dfc98cf8452defb92fc26042d9812231b31c030bd65035c'
+    image: 'index.docker.io/sourcegraph/postgres-12-alpine:4.0.0@sha256:92f25097760f4293807c8570534b655361fb1643c0ff6ecb73e413be1a857dcc'
     cpus: 4
     mem_limit: '4g'
     shm_size: '1g'
@@ -627,7 +601,7 @@ services:
   # for this container will need to be updated to reflect the new connection information.
   pgsql-exporter:
     container_name: pgsql-exporter
-    image: 'index.docker.io/sourcegraph/postgres_exporter:3.43.0@sha256:017fa0f531255c38812711cf77ae72d17ca413364f15f5dc49d745b6664513b2'
+    image: 'index.docker.io/sourcegraph/postgres_exporter:4.0.0@sha256:4787d412f8e0a8a6ae60e542837c4bb17811a67ea4b0093c72d70f67e1117120'
     cpus: 0.1
     mem_limit: '50m'
     networks:
@@ -646,7 +620,7 @@ services:
   #
   codeintel-db:
     container_name: codeintel-db
-    image: 'index.docker.io/sourcegraph/codeintel-db:3.43.0@sha256:deedb0b45df9b9beeebbdca33d70ee79e88818d07f9122df9cb562bb1b72a86d'
+    image: 'index.docker.io/sourcegraph/codeintel-db:4.0.0@sha256:7454dfcda25c58eebc4b92f99ea821000f244945fa76c7f8177c2e565cf840c0'
     cpus: 4
     mem_limit: '4g'
     shm_size: '1g'
@@ -674,7 +648,7 @@ services:
   # for this container will need to be updated to reflect the new connection information.
   codeintel-db-exporter:
     container_name: codeintel-db-exporter
-    image: 'index.docker.io/sourcegraph/postgres_exporter:3.43.0@sha256:017fa0f531255c38812711cf77ae72d17ca413364f15f5dc49d745b6664513b2'
+    image: 'index.docker.io/sourcegraph/postgres_exporter:4.0.0@sha256:4787d412f8e0a8a6ae60e542837c4bb17811a67ea4b0093c72d70f67e1117120'
     cpus: 0.1
     mem_limit: '50m'
     networks:
@@ -693,7 +667,7 @@ services:
   #
   codeinsights-db:
     container_name: codeinsights-db
-    image: 'index.docker.io/sourcegraph/codeinsights-db:3.43.0@sha256:30cd58571358dacbaa9dba7751f3bb162999ddc9426d2abaf8ae50e0db6e4427'
+    image: 'index.docker.io/sourcegraph/codeinsights-db:4.0.0@sha256:bd496ecf08e3fefda55ea8ba71cfbe77d0470ffea52c34ac800ea9de2702b469'
     cpus: 4
     mem_limit: '2g'
     shm_size: '1g'
@@ -726,7 +700,7 @@ services:
   # for this container will need to be updated to reflect the new connection information.
   codeinsights-db-exporter:
     container_name: codeinsights-db-exporter
-    image: 'index.docker.io/sourcegraph/postgres_exporter:3.43.0@sha256:017fa0f531255c38812711cf77ae72d17ca413364f15f5dc49d745b6664513b2'
+    image: 'index.docker.io/sourcegraph/postgres_exporter:4.0.0@sha256:4787d412f8e0a8a6ae60e542837c4bb17811a67ea4b0093c72d70f67e1117120'
     cpus: 0.1
     mem_limit: '50m'
     networks:
@@ -745,7 +719,7 @@ services:
   #
   minio:
     container_name: minio
-    image: 'index.docker.io/sourcegraph/minio:3.43.0@sha256:50319e1de1b733fac50aeabc470a6dc0cd827ffd6e6bee0d094494f0bce28ac6'
+    image: 'index.docker.io/sourcegraph/minio:4.0.0@sha256:a8cc7269c2ffecc7c03791d3999ccc30635e5af36cc73e412bec2ac944be7006'
     cpus: 1
     mem_limit: '1g'
     environment:
@@ -772,7 +746,7 @@ services:
   #
   redis-cache:
     container_name: redis-cache
-    image: 'index.docker.io/sourcegraph/redis-cache:3.43.0@sha256:cf32f5d3dfc36a8cdcbefec472358aedfc99b7abe229e98bb062310acd099f33'
+    image: 'index.docker.io/sourcegraph/redis-cache:4.0.0@sha256:4169f8d15ed363470608850d2c7be87500d25cb6ea56c288e010d1499303d329'
     cpus: 1
     mem_limit: '7g'
     volumes:
@@ -788,7 +762,7 @@ services:
   #
   redis-store:
     container_name: redis-store
-    image: 'index.docker.io/sourcegraph/redis-store:3.43.0@sha256:bd96a7e89079ed63dbcca54eaf30bf0b25b86999f34f186c2061dc9408d5053a'
+    image: 'index.docker.io/sourcegraph/redis-store:4.0.0@sha256:bde1d1ee9e9ca68763035cb659d255d67b460321de5c5cb7d05c53f1623e5aa7'
     cpus: 1
     mem_limit: '7g'
     volumes:
@@ -796,6 +770,23 @@ services:
     networks:
       - sourcegraph
     restart: always
+
+  # Description: Ingests and exports OpenTelemetry data.
+  #
+  # Ports exposed to other Sourcegraph services: 4317 (receiver), 55679 (zpages)
+  # Ports exposed to the public internet: none
+  otel-collector:
+    container_name: otel-collector
+    image: 'index.docker.io/sourcegraph/opentelemetry-collector:4.0.0@sha256:349bca57f486365fe545371ada8aabb4eaaeca899b829fb8717882ffaea28c19'
+    cpus: 1
+    mem_limit: '1g'
+    networks:
+      - sourcegraph
+    restart: always
+    # Default configurations are shipped in '/etc/otel-collector/configs/'
+    command: ['--config', '/etc/otel-collector/configs/logging.yaml']
+    volumes:
+      - '../otel-collector/config.yaml:/etc/otel-collector/config.yaml'
 
 volumes:
   caddy:
