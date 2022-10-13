@@ -8,7 +8,7 @@ DEPLOY_SOURCEGRAPH_DOCKER_FORK_CLONE_URL='https://github.com/sourcegraph/deliver
 DEPLOY_SOURCEGRAPH_DOCKER_FORK_REVISION='tier0-aws-3432'
 ##################### NO CHANGES REQUIRED BELOW THIS LINE #####################
 DEPLOY_SOURCEGRAPH_DOCKER_CHECKOUT='/home/ec2-user/deploy-sourcegraph-docker'
-DOCKER_COMPOSE_VERSION='1.29.2'
+DOCKER_COMPOSE_VERSION='2.4.0'
 DOCKER_DAEMON_CONFIG_FILE='/etc/docker/daemon.json'
 DOCKER_DATA_ROOT='/mnt/docker-data'
 EBS_VOLUME_DEVICE_NAME='/dev/sdb'
